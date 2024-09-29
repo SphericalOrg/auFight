@@ -7,4 +7,6 @@ dependencies {
   if(enableGraalNative == 'true') {
     implementation "io.github.berstanio:gdx-svmhelper-annotations:$graalHelperVersion"
   }
+  // https://mvnrepository.com/artifact/com.github.strikerx3/jxinput
+  implementation group: 'com.github.strikerx3', name: 'jxinput', version: '1.0.0'
 }

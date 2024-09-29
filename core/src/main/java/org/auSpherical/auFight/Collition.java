@@ -1,4 +1,6 @@
-public class Collition implements Entity {
+package org.auSpherical.auFight;
+
+public class Collition {
     private Collidable A;
     private Collidable B;
 
