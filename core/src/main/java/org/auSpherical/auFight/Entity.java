@@ -1,4 +1,4 @@
-package auFigth;
+package org.auSpherical.auFight;
 
 public abstract class Entity {
     private int health;

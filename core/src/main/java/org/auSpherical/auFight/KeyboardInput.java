@@ -1,4 +1,4 @@
-package auFigth;
+package org.auSpherical.auFight;
 
 public class KeyboardInput extends PlayerInput {
     private final boolean hasConfigOne;

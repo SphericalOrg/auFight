@@ -1,4 +1,4 @@
-package auFigth;
+package org.auSpherical.auFight;
 
 public class Weapon implements Entity{
     private Hitbox activeFrame;

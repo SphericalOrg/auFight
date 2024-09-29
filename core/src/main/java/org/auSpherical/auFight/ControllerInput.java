@@ -1,4 +1,4 @@
-package auFigth;
+package org.auSpherical.auFight;
 
 import com.github.strikerx3.jxinput.*;
 import com.github.strikerx3.jxinput.enums.XInputButton;
