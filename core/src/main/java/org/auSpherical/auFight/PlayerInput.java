@@ -1,4 +1,4 @@
-package auFigth;
+package org.auSpherical.auFight;
 
 public abstract class PlayerInput {
     public boolean hasPlayer = false;
