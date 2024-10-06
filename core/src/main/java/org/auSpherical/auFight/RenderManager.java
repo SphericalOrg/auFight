@@ -20,7 +20,9 @@ public class RenderManager {
     public void draw() {
         batch.begin();
         drawHud();
+
         gameLogicManager.player1.render(batch);
+        gameLogicManager.player2.render(batch);
         batch.end();
     }
 
