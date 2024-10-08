@@ -1,11 +1,14 @@
 package org.auSpherical.auFight;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public abstract class Entity {
     public int health;
-    public Sprite sprite;
+    //Use textureRegion por que para despues nos puede servir para animaciones
+    public TextureRegion region;
     public CollitionBox collitionBox;
+    public Sprite sprite;
 
     public void move(){}
 }
