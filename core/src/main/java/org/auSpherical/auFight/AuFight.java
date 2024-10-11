@@ -5,6 +5,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.auSpherical.auFight.screens.AuFightScreen;
+import org.auSpherical.auFight.screens.LeaderboardScreen;
+import org.auSpherical.auFight.screens.MenuScreen;
 
 public class AuFight extends Game {
 
@@ -33,5 +35,24 @@ public class AuFight extends Game {
     public void dispose() {
         batch.dispose();
         font.dispose();
+    }
+    public void changeScreen(String screen){
+        switch (screen) {
+            case "GAME":
+                setScreen(new MenuScreen(this));
+                break;
+            case "MENU":
+                setScreen(new MenuScreen(this));
+                break;
+            case "TOP":
+                setScreen(new LeaderboardScreen(this));
+                break;
+            /*case "NAME":
+                setScreen(new MenuScreen(this));
+                break;*/
+            default:
+                setScreen(new MenuScreen(this));
+                break;
+        }
     }
 }
