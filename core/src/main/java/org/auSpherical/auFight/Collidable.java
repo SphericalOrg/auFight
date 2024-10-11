@@ -1,4 +1,4 @@
 package org.auSpherical.auFight;
 
-public class CollitionBox {
+public interface Collidable {
 }

@@ -1,9 +1,9 @@
 package org.auSpherical.auFight;
 
-public class Weapon implements Entity{
-    private Hitbox activeFrame;
+public class Weapon extends Entity {
+    private int activeFrame;
 
-    public summonHitbox(){
+    public void summonHitbox(){
         //TODO: Waiting
     }
 }

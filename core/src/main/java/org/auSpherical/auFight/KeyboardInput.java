@@ -1,5 +1,8 @@
 package org.auSpherical.auFight;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+
 public class KeyboardInput extends PlayerInput {
     private final boolean hasConfigOne;
     private int KEY_LEFT;
