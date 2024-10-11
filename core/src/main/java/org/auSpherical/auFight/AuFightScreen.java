@@ -15,6 +15,7 @@ public class AuFightScreen extends AbstractScreen{
     @Override
     public void render(float delta) {
         super.render(delta);
+        ResourceManager.update();
         gameLogicManager.update(delta);
         renderManager.draw();
     }
@@ -27,5 +28,8 @@ public class AuFightScreen extends AbstractScreen{
     public void show() {
 
     }
-
+    @Override
+    public void dispose() {
+        ResourceManager.dispose();
+    }
 }

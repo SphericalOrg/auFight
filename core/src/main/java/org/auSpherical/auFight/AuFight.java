@@ -16,6 +16,7 @@ public class AuFight extends Game {
         batch = new SpriteBatch();
         font = new BitmapFont();
         camera = new OrthographicCamera();
+        ResourceManager.loadAllResources();
         camera.setToOrtho(false, 1600, 900);
         camera.update();
         setScreen(new AuFightScreen(this));
