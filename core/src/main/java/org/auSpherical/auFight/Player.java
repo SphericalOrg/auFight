@@ -8,12 +8,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.graphics.g2d.Animation;
 
 public class Player extends Entity {
-    private final float MAX_SPEED = 3.5f;
+    private final float MAX_SPEED = 4.5f;
     private final float GROUND = 0.5f;
     private final float AIR = 0.05f;
     private final float GRAVITY = 0.5f;
     private final float ACCELERATION = 0.83f;
-    private final float JUMP = 15f;
+    private final float JUMP = 16f;
     private final float FLOOR = 300;
     private boolean doubleJump = true;
     private PlayerInput controller;
@@ -26,6 +26,7 @@ public class Player extends Entity {
     private Animation<TextureRegion> idleAnimation;
     private Animation<TextureRegion> walkAnimation;
     private Animation<TextureRegion> jumpAnimation;
+    private Animation<TextureRegion> doubleJumpAnimation;
     private float stateTime;
 
     public Player(PlayerInput controller,int num){
@@ -33,7 +34,8 @@ public class Player extends Entity {
 
         idleAnimation = ResourceManager.createAnimation("cat_idle", 4, 0.1f);
         walkAnimation = ResourceManager.createAnimation("cat_walk", 8, 0.1f);
-        jumpAnimation = ResourceManager.createAnimation("cat_jump", 8, 0.1f);
+        jumpAnimation = ResourceManager.createAnimation("cat_jump", 8, 0.11f);
+        doubleJumpAnimation = ResourceManager.createAnimation("cat_doublejump", 6, 0.11f);
 
         sprite = new Sprite(idleAnimation.getKeyFrame(0));
         sprite.setScale(4f);
@@ -66,7 +68,11 @@ public class Player extends Entity {
     private void updateAnimation() {
         TextureRegion frame;
         if (!grounded) {
-            frame = jumpAnimation.getKeyFrame(stateTime, true);
+            if (!doubleJump) {
+                frame = doubleJumpAnimation.getKeyFrame(stateTime, false);
+            } else {
+                frame = jumpAnimation.getKeyFrame(stateTime, false);
+            }
         } else if (Math.abs(speed.x) > 0) {
             frame = walkAnimation.getKeyFrame(stateTime, true);
         } else {
@@ -111,6 +117,7 @@ public class Player extends Entity {
         speed.x = Math.signum((controller.RIGHT-controller.LEFT)/speed.x) == -1.3f?-0.5f*speed.x:speed.x;
         grounded = false;
         actionable = false;
+        stateTime = 0;
     }
 
     private float airFriction(float value, float absoluteReduction){
@@ -136,6 +143,7 @@ public class Player extends Entity {
                 speed.x*=2;
                 doubleJump = true;
                 speed.y=0;
+                stateTime = 0;
             }
         }
     }
