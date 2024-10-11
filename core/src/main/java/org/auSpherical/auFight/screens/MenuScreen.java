@@ -71,23 +71,22 @@ public class MenuScreen extends AbstractScreen {
             public void changed(ChangeListener.ChangeEvent event, Actor actor)
             {
                 TextField usernameField = new TextField("", skin);
-                TextField passwordField = new TextField("", skin);
+                TextField username2Field = new TextField("", skin);
 
-                Dialog inputDialog = ventanDialogo(usernameField, passwordField);
+                Dialog inputDialog = ventanDialogo(usernameField, username2Field);
                 inputDialog.row();
-                inputDialog.add(new Label("Usuario: ", skin));
+                inputDialog.add(new Label("Jugador 1: ", skin));
                 inputDialog.add(usernameField).width(200);
 
-                inputDialog.row();
-                inputDialog.add(new Label("Contraseña: ", skin));
-                passwordField.setPasswordMode(true);  // Modo de contraseña (oculta texto)
-                passwordField.setPasswordCharacter('*');
-                inputDialog.add(passwordField).width(200);
+                inputDialog.add(new Label("Jugador 2: ", skin));
+                //passwordField.setPasswordMode(false);  // Modo de contraseña (oculta texto)
+                //passwordField.setPasswordCharacter('*');
+                inputDialog.add(username2Field).width(200);
 
                 inputDialog.key(Keys.ENTER, true);  // Asignar Enter para confirmar
                 inputDialog.key(Keys.ESCAPE, false);  // Asignar Escape para cancelar
 
-                System.out.println(passwordField.getText());
+                System.out.println(username2Field.getText());
                 // Mostrar el diálogo
                 inputDialog.show(MenuScreen.this);
             }
@@ -105,7 +104,7 @@ public class MenuScreen extends AbstractScreen {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 System.out.println("Botón 3 presionado");
-                System.out.println(Gdx.files.local("json/kmano.json").exists());
+                Gdx.app.exit();
             }
         });
 
@@ -117,13 +116,13 @@ public class MenuScreen extends AbstractScreen {
             @Override
             protected void result(Object object) {
                 String user = usernameField.getText();
-                String pass = passwordField.getText();
+                String user2 = passwordField.getText();
 
                 System.out.println("Botón presionado: " + object);
-                System.out.println("\n"+ pass);
+                System.out.println("\n"+ user2);
                 System.out.println("\n"+ user);
 
-                main.changeScreen("algo");
+                main.changeScreen("GAME");
             }
 
         };
