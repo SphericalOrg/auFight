@@ -1,4 +1,4 @@
-package org.auSpherical.auFight;
+package org.auSpherical.auFight.inputs;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import org.auSpherical.auFight.Entity;
+import org.auSpherical.auFight.ResourceManager;
 
 public class Player extends Entity {
     private final float MAX_SPEED = 4.5f;

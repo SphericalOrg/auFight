@@ -1,4 +1,4 @@
-package org.auSpherical.auFight;
+package org.auSpherical.auFight.placeholders;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;

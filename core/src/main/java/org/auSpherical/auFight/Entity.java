@@ -2,6 +2,7 @@ package org.auSpherical.auFight;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import org.auSpherical.auFight.placeholders.CollitionBox;
 
 public abstract class Entity {
     public int health;

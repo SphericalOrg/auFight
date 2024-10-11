@@ -1,7 +1,12 @@
 //screen principal donde se va a ejecutar el juego
-package org.auSpherical.auFight;
+package org.auSpherical.auFight.screens;
 
-public class AuFightScreen extends AbstractScreen{
+import org.auSpherical.auFight.AuFight;
+import org.auSpherical.auFight.GameLogicManager;
+import org.auSpherical.auFight.RenderManager;
+import org.auSpherical.auFight.ResourceManager;
+
+public class AuFightScreen extends AbstractScreen {
 
     GameLogicManager gameLogicManager;
     RenderManager renderManager;

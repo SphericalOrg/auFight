@@ -1,4 +1,6 @@
-package org.auSpherical.auFight;
+package org.auSpherical.auFight.placeholders;
+
+import org.auSpherical.auFight.Entity;
 
 public class Shield extends Entity implements Damageable {
 
