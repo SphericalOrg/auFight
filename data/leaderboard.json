@@ -1,0 +1,13 @@
+{
+  "name": "Default Leader",
+  "puntuation": {
+    "kmano": {
+      "class": "java.lang.Integer",
+      "value": 1010
+    },
+    "ignacio": {
+      "class": "java.lang.Integer",
+      "value": 1111
+    }
+  }
+}
