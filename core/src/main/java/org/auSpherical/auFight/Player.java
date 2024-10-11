@@ -114,7 +114,7 @@ public class Player extends Entity {
 
     private void jump(){
         speed.y = JUMP;
-        speed.x = Math.signum((controller.RIGHT-controller.LEFT)/speed.x) == -1.3f?-0.5f*speed.x:speed.x;
+        speed.x = Math.signum((controller.RIGHT-controller.LEFT)/speed.x) == -1f?-0.5f*speed.x:speed.x;
         grounded = false;
         actionable = false;
         stateTime = 0;
