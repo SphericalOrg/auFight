@@ -4,12 +4,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import org.auSpherical.auFight.screens.AuFightScreen;
 
 public class AuFight extends Game {
 
     public SpriteBatch batch;
     public BitmapFont font;
-    OrthographicCamera camera;
+    public OrthographicCamera camera;
 
     @Override
     public void create() {

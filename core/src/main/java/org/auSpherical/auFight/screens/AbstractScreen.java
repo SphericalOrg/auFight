@@ -1,8 +1,9 @@
-package org.auSpherical.auFight;
+package org.auSpherical.auFight.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import org.auSpherical.auFight.AuFight;
 
 public abstract class AbstractScreen extends Stage implements Screen {
     protected final AuFight main;

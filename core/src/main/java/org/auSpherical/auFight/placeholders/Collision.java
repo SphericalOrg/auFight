@@ -1,4 +1,4 @@
-package org.auSpherical.auFight;
+package org.auSpherical.auFight.placeholders;
 
 public class Collision {
     private Collidable A;
