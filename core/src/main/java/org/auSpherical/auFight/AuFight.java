@@ -22,7 +22,7 @@ public class AuFight extends Game {
         ResourceManager.loadAllResources();
         camera.setToOrtho(false, 1600, 900);
         camera.update();
-        setScreen(new AuFightScreen(this));
+        setScreen(new MenuScreen(this));
     }
 
     @Override
@@ -39,7 +39,7 @@ public class AuFight extends Game {
     public void changeScreen(String screen){
         switch (screen) {
             case "GAME":
-                setScreen(new MenuScreen(this));
+                setScreen(new AuFightScreen(this));
                 break;
             case "MENU":
                 setScreen(new MenuScreen(this));
