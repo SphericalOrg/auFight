@@ -1,22 +1,21 @@
 package org.auSpherical.auFight;
 
-
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.g2d.Animation;
 
 public class Player extends Entity {
-    private final float MAX_SPEED = 8.5f;
+    private final float MAX_SPEED = 3.5f;
     private final float GROUND = 0.5f;
     private final float AIR = 0.05f;
     private final float GRAVITY = 0.5f;
     private final float ACCELERATION = 0.83f;
     private final float JUMP = 15f;
-    private final float FLOOR = -850;
-    private boolean doubleJump= true;
+    private final float FLOOR = 300;
+    private boolean doubleJump = true;
     private PlayerInput controller;
     private boolean lookingRight = false;
     private boolean actionable;
@@ -24,32 +23,58 @@ public class Player extends Entity {
     private Vector2 speed = new Vector2(0,0);
     private int actionTimer = 60;
     public int score;
-    Texture texture;
+    private Animation<TextureRegion> idleAnimation;
+    private Animation<TextureRegion> walkAnimation;
+    private Animation<TextureRegion> jumpAnimation;
+    private float stateTime;
 
     public Player(PlayerInput controller,int num){
         this.controller = controller;
-        texture = new Texture("soki.png");
-        region = new TextureRegion(texture);
-        sprite = new Sprite(region);
-        sprite.setScale(0.12f);
-        sprite.setX(num==1?-800:200);
+
+        idleAnimation = ResourceManager.createAnimation("cat_idle", 4, 0.1f);
+        walkAnimation = ResourceManager.createAnimation("cat_walk", 8, 0.1f);
+        jumpAnimation = ResourceManager.createAnimation("cat_jump", 8, 0.1f);
+
+        sprite = new Sprite(idleAnimation.getKeyFrame(0));
+        sprite.setScale(4f);
+        sprite.setX(num == 1 ? 200 : 1200);
         sprite.setY(FLOOR);
-        sprite.setColor(num==2? Color.BLUE:Color.RED);
-    }
-    public void summonShield(){
-    }
-
-    public void summonWeapon(){
-
     }
 
     @Override
     public void move(){
         controller.update();
+        stateTime += Gdx.graphics.getDeltaTime();
+        updateAnimation();
         ground();
         setSpeed();
         action();
         sprite.setPosition(sprite.getX()+speed.x,sprite.getY()+speed.y);
+        sprite.setFlip(lookingRight, false);
+        updateDirection();
+    }
+
+    private void updateDirection() {
+        if (controller.RIGHT == 1 && lookingRight) {
+            lookingRight = false;
+        } else if (controller.LEFT == 1 && !lookingRight) {
+            lookingRight = true;
+        }
+    }
+
+
+    private void updateAnimation() {
+        TextureRegion frame;
+        if (!grounded) {
+            frame = jumpAnimation.getKeyFrame(stateTime, true);
+        } else if (Math.abs(speed.x) > 0) {
+            frame = walkAnimation.getKeyFrame(stateTime, true);
+        } else {
+            frame = idleAnimation.getKeyFrame(stateTime, true);
+        }
+        sprite.setRegion(frame);
+        sprite.setSize(frame.getRegionWidth(), frame.getRegionHeight());
+        sprite.setOriginCenter();
     }
 
     private void action(){
@@ -88,19 +113,6 @@ public class Player extends Entity {
         actionable = false;
     }
 
-    public void lookLeft(){
-        if (lookingRight){
-            sprite.flip(true,false);
-            lookingRight = false;
-        }
-    }
-
-    public void lookRight(){
-        if (!lookingRight){
-            sprite.flip(true,false);
-            lookingRight = true;
-        }
-    }
     private float airFriction(float value, float absoluteReduction){
         return Math.signum(value)*(Math.max(0,Math.abs(value)-absoluteReduction));
     }

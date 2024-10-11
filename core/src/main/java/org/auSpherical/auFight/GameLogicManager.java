@@ -21,12 +21,5 @@ public class GameLogicManager {
     private void handleInput() {
         player1.move();
         player2.move();
-        if (player1.sprite.getX()>player2.sprite.getX()){
-            player1.lookLeft();
-            player2.lookRight();
-        } else {
-            player1.lookRight();
-            player2.lookLeft();
-        }
     }
 }
