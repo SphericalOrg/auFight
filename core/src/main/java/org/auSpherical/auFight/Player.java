@@ -57,9 +57,9 @@ public class Player extends Entity {
     }
 
     private void updateDirection() {
-        if (controller.RIGHT == 1 && lookingRight) {
+        if ((controller.RIGHT > 0 && lookingRight) && !(controller.LEFT>0)) {
             lookingRight = false;
-        } else if (controller.LEFT == 1 && !lookingRight) {
+        } else if ((controller.LEFT >0 && !lookingRight) && !(controller.RIGHT>0)) {
             lookingRight = true;
         }
     }
