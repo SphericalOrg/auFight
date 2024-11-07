@@ -15,15 +15,15 @@ public class Player extends Entity {
     private final float AIR = 0.05f;
     private final float GRAVITY = 0.5f;
     private final float ACCELERATION = 0.83f;
-    private final float JUMP = 16f;
+    final float JUMP = 16f;
     private final float FLOOR = 300;
-    private boolean doubleJump = true;
+    boolean doubleJump = true;
     private PlayerInput controller;
-    private boolean lookingRight = false;
-    private boolean actionable;
+    boolean lookingRight = false;
+    boolean actionable;
     private boolean grounded = true;
     private Vector2 speed = new Vector2(0,0);
-    private int actionTimer = 60;
+    int actionTimer = 60;
     public int score;
     private Animation<TextureRegion> idleAnimation;
     private Animation<TextureRegion> walkAnimation;
@@ -62,6 +62,13 @@ public class Player extends Entity {
         return grounded;
     }
 
+    public Vector2 getSpeed(){
+        return speed;
+    }
+
+    public void setGrounded(boolean bool){
+        this.grounded = bool;
+    }
     private void updateDirection() {
         if ((controller.RIGHT > 0 && lookingRight) && !(controller.LEFT>0)) {
             lookingRight = false;
@@ -114,7 +121,7 @@ public class Player extends Entity {
         }
     }
 
-    private float fallingDelta(){
+    float fallingDelta(){
         return -GRAVITY*(1+controller.DOWN)+(ACCELERATION/10)*controller.UP;
     }
 
