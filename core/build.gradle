@@ -12,6 +12,7 @@ dependencies {
   }
   // https://mvnrepository.com/artifact/com.github.strikerx3/jxinput
   implementation group: 'com.github.strikerx3', name: 'jxinput', version: '1.0.0'
+  testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.1.0'
 }
 
 tasks.named('test') {
