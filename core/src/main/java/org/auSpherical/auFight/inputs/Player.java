@@ -58,6 +58,10 @@ public class Player extends Entity {
         updateDirection();
     }
 
+    public boolean isGrounded(){
+        return grounded;
+    }
+
     private void updateDirection() {
         if ((controller.RIGHT > 0 && lookingRight) && !(controller.LEFT>0)) {
             lookingRight = false;
