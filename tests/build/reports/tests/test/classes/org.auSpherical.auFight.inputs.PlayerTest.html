@@ -23,13 +23,13 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">1</div>
+<div class="counter">5</div>
 <p>tests</p>
 </div>
 </td>
 <td>
 <div class="infoBox" id="failures">
-<div class="counter">1</div>
+<div class="counter">5</div>
 <p>failures</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.007s</div>
+<div class="counter">0.034s</div>
 <p>duration</p>
 </div>
 </td>
@@ -70,52 +70,137 @@
 <div id="tab0" class="tab">
 <h2>Failed tests</h2>
 <div class="test">
-<a name="initializationError"></a>
-<h3 class="failures">initializationError</h3>
+<a name="testPlayerMoveWithGroundedFalse"></a>
+<h3 class="failures">testPlayerMoveWithGroundedFalse</h3>
 <span class="code">
-<pre>org.junit.runners.model.InvalidTestClassError: Invalid test class 'org.auSpherical.auFight.inputs.PlayerTest':
-  1. The class org.auSpherical.auFight.inputs.PlayerTest is not public.
-  2. Test class should have exactly one public constructor
-  3. Method testPlayerMoveWithJump() should be public
-  4. Method testPlayerMoveWithLookingLeft() should be public
-  5. Method testPlayerMoveWithGroundedFalse() should be public
-  6. Method testPlayerMoveWithLookingRight() should be public
-  7. Method testPlayerMoveWithGroundedTrue() should be public
-	at org.junit.runners.ParentRunner.validate(ParentRunner.java:525)
-	at org.junit.runners.ParentRunner.&lt;init&gt;(ParentRunner.java:92)
-	at org.junit.runners.BlockJUnit4ClassRunner.&lt;init&gt;(BlockJUnit4ClassRunner.java:74)
-	at de.tomgrill.gdxtesting.GdxTestRunner.&lt;init&gt;(GdxTestRunner.java:40)
-	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
-	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
-	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
-	at org.junit.internal.builders.AnnotatedBuilder.buildRunner(AnnotatedBuilder.java:104)
-	at org.junit.internal.builders.AnnotatedBuilder.runnerForClass(AnnotatedBuilder.java:86)
-	at org.junit.runners.model.RunnerBuilder.safeRunnerForClass(RunnerBuilder.java:70)
-	at org.junit.internal.builders.AllDefaultPossibilitiesBuilder.runnerForClass(AllDefaultPossibilitiesBuilder.java:37)
-	at org.junit.runners.model.RunnerBuilder.safeRunnerForClass(RunnerBuilder.java:70)
-	at org.junit.internal.requests.ClassRequest.createRunner(ClassRequest.java:28)
-	at org.junit.internal.requests.MemoizingRequest.getRunner(MemoizingRequest.java:19)
-	at org.gradle.api.internal.tasks.testing.junit.JUnitTestClassExecutor.runTestClass(JUnitTestClassExecutor.java:77)
-	at org.gradle.api.internal.tasks.testing.junit.JUnitTestClassExecutor.execute(JUnitTestClassExecutor.java:58)
-	at org.gradle.api.internal.tasks.testing.junit.JUnitTestClassExecutor.execute(JUnitTestClassExecutor.java:40)
-	at org.gradle.api.internal.tasks.testing.junit.AbstractJUnitTestClassProcessor.processTestClass(AbstractJUnitTestClassProcessor.java:54)
-	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.processTestClass(SuiteTestClassProcessor.java:53)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
-	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
-	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
-	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:92)
-	at jdk.proxy1/jdk.proxy1.$Proxy4.processTestClass(Unknown Source)
-	at org.gradle.api.internal.tasks.testing.worker.TestWorker$2.run(TestWorker.java:183)
-	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:132)
-	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103)
-	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63)
-	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
-	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:121)
-	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:71)
-	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
-	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+<pre>com.badlogic.gdx.utils.GdxRuntimeException: Asset not loaded: cat.atlas
+	at app//com.badlogic.gdx.assets.AssetManager.get(AssetManager.java:173)
+	at app//com.badlogic.gdx.assets.AssetManager.get(AssetManager.java:144)
+	at app//org.auSpherical.auFight.ResourceManager.getRegion(ResourceManager.java:23)
+	at app//org.auSpherical.auFight.ResourceManager.createAnimation(ResourceManager.java:29)
+	at app//org.auSpherical.auFight.inputs.Player.&lt;init&gt;(Player.java:37)
+	at app//org.auSpherical.auFight.inputs.PlayerTest.testPlayerMoveWithGroundedFalse(PlayerTest.java:28)
+	at java.base@22.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base@22.0.2/java.lang.reflect.Method.invoke(Method.java:580)
+	at app//org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at app//org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at app//org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at app//org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at app//org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at app//org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at app//org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at app//org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at app//de.tomgrill.gdxtesting.GdxTestRunner.render(GdxTestRunner.java:59)
+	at app//com.badlogic.gdx.backends.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:128)
+	at app//com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:93)
+</pre>
+</span>
+</div>
+<div class="test">
+<a name="testPlayerMoveWithGroundedTrue"></a>
+<h3 class="failures">testPlayerMoveWithGroundedTrue</h3>
+<span class="code">
+<pre>com.badlogic.gdx.utils.GdxRuntimeException: Asset not loaded: cat.atlas
+	at app//com.badlogic.gdx.assets.AssetManager.get(AssetManager.java:173)
+	at app//com.badlogic.gdx.assets.AssetManager.get(AssetManager.java:144)
+	at app//org.auSpherical.auFight.ResourceManager.getRegion(ResourceManager.java:23)
+	at app//org.auSpherical.auFight.ResourceManager.createAnimation(ResourceManager.java:29)
+	at app//org.auSpherical.auFight.inputs.Player.&lt;init&gt;(Player.java:37)
+	at app//org.auSpherical.auFight.inputs.PlayerTest.testPlayerMoveWithGroundedTrue(PlayerTest.java:16)
+	at java.base@22.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base@22.0.2/java.lang.reflect.Method.invoke(Method.java:580)
+	at app//org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at app//org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at app//org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at app//org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at app//org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at app//org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at app//org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at app//org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at app//de.tomgrill.gdxtesting.GdxTestRunner.render(GdxTestRunner.java:59)
+	at app//com.badlogic.gdx.backends.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:128)
+	at app//com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:93)
+</pre>
+</span>
+</div>
+<div class="test">
+<a name="testPlayerMoveWithJump"></a>
+<h3 class="failures">testPlayerMoveWithJump</h3>
+<span class="code">
+<pre>com.badlogic.gdx.utils.GdxRuntimeException: Asset not loaded: cat.atlas
+	at app//com.badlogic.gdx.assets.AssetManager.get(AssetManager.java:173)
+	at app//com.badlogic.gdx.assets.AssetManager.get(AssetManager.java:144)
+	at app//org.auSpherical.auFight.ResourceManager.getRegion(ResourceManager.java:23)
+	at app//org.auSpherical.auFight.ResourceManager.createAnimation(ResourceManager.java:29)
+	at app//org.auSpherical.auFight.inputs.Player.&lt;init&gt;(Player.java:37)
+	at app//org.auSpherical.auFight.inputs.PlayerTest.testPlayerMoveWithJump(PlayerTest.java:41)
+	at java.base@22.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base@22.0.2/java.lang.reflect.Method.invoke(Method.java:580)
+	at app//org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at app//org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at app//org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at app//org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at app//org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at app//org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at app//org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at app//org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at app//de.tomgrill.gdxtesting.GdxTestRunner.render(GdxTestRunner.java:59)
+	at app//com.badlogic.gdx.backends.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:128)
+	at app//com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:93)
+</pre>
+</span>
+</div>
+<div class="test">
+<a name="testPlayerMoveWithLookingLeft"></a>
+<h3 class="failures">testPlayerMoveWithLookingLeft</h3>
+<span class="code">
+<pre>com.badlogic.gdx.utils.GdxRuntimeException: Asset not loaded: cat.atlas
+	at app//com.badlogic.gdx.assets.AssetManager.get(AssetManager.java:173)
+	at app//com.badlogic.gdx.assets.AssetManager.get(AssetManager.java:144)
+	at app//org.auSpherical.auFight.ResourceManager.getRegion(ResourceManager.java:23)
+	at app//org.auSpherical.auFight.ResourceManager.createAnimation(ResourceManager.java:29)
+	at app//org.auSpherical.auFight.inputs.Player.&lt;init&gt;(Player.java:37)
+	at app//org.auSpherical.auFight.inputs.PlayerTest.testPlayerMoveWithLookingLeft(PlayerTest.java:54)
+	at java.base@22.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base@22.0.2/java.lang.reflect.Method.invoke(Method.java:580)
+	at app//org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at app//org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at app//org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at app//org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at app//org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at app//org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at app//org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at app//org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at app//de.tomgrill.gdxtesting.GdxTestRunner.render(GdxTestRunner.java:59)
+	at app//com.badlogic.gdx.backends.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:128)
+	at app//com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:93)
+</pre>
+</span>
+</div>
+<div class="test">
+<a name="testPlayerMoveWithLookingRight"></a>
+<h3 class="failures">testPlayerMoveWithLookingRight</h3>
+<span class="code">
+<pre>com.badlogic.gdx.utils.GdxRuntimeException: Asset not loaded: cat.atlas
+	at app//com.badlogic.gdx.assets.AssetManager.get(AssetManager.java:173)
+	at app//com.badlogic.gdx.assets.AssetManager.get(AssetManager.java:144)
+	at app//org.auSpherical.auFight.ResourceManager.getRegion(ResourceManager.java:23)
+	at app//org.auSpherical.auFight.ResourceManager.createAnimation(ResourceManager.java:29)
+	at app//org.auSpherical.auFight.inputs.Player.&lt;init&gt;(Player.java:37)
+	at app//org.auSpherical.auFight.inputs.PlayerTest.testPlayerMoveWithLookingRight(PlayerTest.java:66)
+	at java.base@22.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base@22.0.2/java.lang.reflect.Method.invoke(Method.java:580)
+	at app//org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at app//org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at app//org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at app//org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at app//org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at app//org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at app//org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at app//org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at app//de.tomgrill.gdxtesting.GdxTestRunner.render(GdxTestRunner.java:59)
+	at app//com.badlogic.gdx.backends.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:128)
+	at app//com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:93)
 </pre>
 </span>
 </div>
@@ -131,8 +216,28 @@
 </tr>
 </thead>
 <tr>
-<td class="failures">initializationError</td>
-<td class="failures">0.007s</td>
+<td class="failures">testPlayerMoveWithGroundedFalse</td>
+<td class="failures">0.001s</td>
+<td class="failures">failed</td>
+</tr>
+<tr>
+<td class="failures">testPlayerMoveWithGroundedTrue</td>
+<td class="failures">0s</td>
+<td class="failures">failed</td>
+</tr>
+<tr>
+<td class="failures">testPlayerMoveWithJump</td>
+<td class="failures">0.032s</td>
+<td class="failures">failed</td>
+</tr>
+<tr>
+<td class="failures">testPlayerMoveWithLookingLeft</td>
+<td class="failures">0.001s</td>
+<td class="failures">failed</td>
+</tr>
+<tr>
+<td class="failures">testPlayerMoveWithLookingRight</td>
+<td class="failures">0s</td>
 <td class="failures">failed</td>
 </tr>
 </table>
@@ -145,7 +250,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.10.1</a> at Nov 7, 2024, 8:04:45 PM</p>
+<a href="http://www.gradle.org">Gradle 8.10.1</a> at Nov 7, 2024, 8:19:59 PM</p>
 </div>
 </div>
 </body>

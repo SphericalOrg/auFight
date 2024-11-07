@@ -8,10 +8,10 @@ import com.badlogic.gdx.math.Vector2;
 import static org.junit.Assert.*;
 
 @RunWith(GdxTestRunner.class)
-class PlayerTest {
+public class PlayerTest {
 
     @Test
-    void testPlayerMoveWithGroundedTrue() {
+    public void testPlayerMoveWithGroundedTrue() {
         KeyboardInput controller = new KeyboardInput(true);
         Player player = new Player(controller, 1);
 
@@ -23,7 +23,7 @@ class PlayerTest {
     }
 
     @Test
-    void testPlayerMoveWithGroundedFalse() {
+    public void testPlayerMoveWithGroundedFalse() {
         KeyboardInput controller = new KeyboardInput(true);
         Player player = new Player(controller, 1);
 
@@ -36,7 +36,7 @@ class PlayerTest {
     }
 
     @Test
-    void testPlayerMoveWithJump() {
+    public void testPlayerMoveWithJump() {
         KeyboardInput controller = new KeyboardInput(true);
         Player player = new Player(controller, 1);
 
@@ -49,7 +49,7 @@ class PlayerTest {
     }
 
     @Test
-    void testPlayerMoveWithLookingLeft() {
+    public void testPlayerMoveWithLookingLeft() {
         KeyboardInput controller = new KeyboardInput(true);
         Player player = new Player(controller, 1);
 
@@ -61,7 +61,7 @@ class PlayerTest {
     }
 
     @Test
-    void testPlayerMoveWithLookingRight() {
+    public void testPlayerMoveWithLookingRight() {
         KeyboardInput controller = new KeyboardInput(true);
         Player player = new Player(controller, 1);
 
