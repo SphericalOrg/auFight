@@ -1,8 +1,10 @@
 package org.auSpherical.auFight.inputs;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 
+/**
+ * Handles keyboard input for a player.
+ */
 public class KeyboardInput extends PlayerInput {
     private final boolean hasConfigOne;
     private int KEY_LEFT;
@@ -12,20 +14,39 @@ public class KeyboardInput extends PlayerInput {
     private int KEY_A;
     private int KEY_B;
 
+    /**
+     * Constructs a KeyboardInput with the specified configuration.
+     *
+     * @param configOne Determines which key configuration to use.
+     */
     public KeyboardInput(boolean configOne){
         this.hasConfigOne = configOne;
         mapping();
 
     }
 
+    /**
+     * Updates the input state.
+     * This method is called every frame to update the input values.
+     */
     @Override
     public void update(){
         setInputValues();
     }
+
+    /**
+     * Checks if the player has interacted.
+     *
+     * @return true if the player has interacted, false otherwise.
+     */
     @Override
     public boolean interacted(){
         return !hasPlayer && (key(KEY_A) || key(KEY_B) || key(KEY_UP) || key(KEY_DOWN) || key(KEY_LEFT) || key(KEY_RIGHT));
     }
+
+    /**
+     * Sets the input values based on the current state of the keys.
+     */
     private void setInputValues(){
         LEFT = key(KEY_LEFT)?1:0;
         RIGHT = key(KEY_RIGHT)?1:0;
@@ -34,9 +55,20 @@ public class KeyboardInput extends PlayerInput {
         A = key(KEY_A);
         B = key(KEY_B);
     }
+
+    /**
+     * Checks if the specified key is pressed.
+     *
+     * @param keyValue The key value to check.
+     * @return true if the key is pressed, false otherwise.
+     */
     private boolean key(int keyValue){
         return Gdx.input.isKeyPressed(keyValue);
     }
+
+    /**
+     * Maps the keys based on the configuration.
+     */
     private void mapping(){
         if (hasConfigOne){
             KEY_LEFT = Keys.A;

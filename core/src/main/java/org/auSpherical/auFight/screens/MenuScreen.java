@@ -15,11 +15,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import org.auSpherical.auFight.AuFight;
 
-
+/**
+ * Represents the main menu screen of the game.
+ * This class handles the UI elements and navigation within the main menu.
+ */
 public class MenuScreen extends AbstractScreen {
-
     private final Skin skin;
 
+    /**
+     * Constructs a MenuScreen with the given main game instance.
+     * Initializes the UI elements and sets up listeners for menu buttons.
+     *
+     * @param main The main game instance.
+     */
     public MenuScreen(AuFight main) {
         super(main);
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
@@ -35,26 +43,19 @@ public class MenuScreen extends AbstractScreen {
         addActor(rootTable);
 
         //Texture backgoround = new Texture(Gdx.files.internal("patrick.png"));  // Asegúrate de tener esta imagen
-
         //Sprite sprite = new Sprite(backgoround);
-
-
         Label label = new Label("auFight", skin);
         label.setFontScale(7.5f);  // Escalar el texto para que sea grande
         label.setAlignment(Align.center);
         rootTable.add(label).colspan(3).padBottom(20f);  // Añadir el texto en el centro
         rootTable.row();
-
         TextButton button1 = new TextButton("Partida Rapida", skin);
         TextButton button2 = new TextButton("Marcadores", skin);
         TextButton button3 = new TextButton("Salir", skin);
-
         button1.setTransform(true);  // Permitir transformación
         button1.setScale(2f);  // Escalar el botón a 7.5 veces su tamaño normal
-
         button2.setTransform(true);
         button2.setScale(2f);
-
         button3.setTransform(true);
         button3.setScale(2f);
 
@@ -72,26 +73,21 @@ public class MenuScreen extends AbstractScreen {
             {
                 TextField usernameField = new TextField("", skin);
                 TextField username2Field = new TextField("", skin);
-
                 Dialog inputDialog = ventanDialogo(usernameField, username2Field);
                 inputDialog.row();
                 inputDialog.add(new Label("Jugador 1: ", skin));
                 inputDialog.add(usernameField).width(200);
-
                 inputDialog.add(new Label("Jugador 2: ", skin));
                 //passwordField.setPasswordMode(false);  // Modo de contraseña (oculta texto)
                 //passwordField.setPasswordCharacter('*');
                 inputDialog.add(username2Field).width(200);
-
                 inputDialog.key(Keys.ENTER, true);  // Asignar Enter para confirmar
                 inputDialog.key(Keys.ESCAPE, false);  // Asignar Escape para cancelar
-
                 System.out.println(username2Field.getText());
                 // Mostrar el diálogo
                 inputDialog.show(MenuScreen.this);
             }
         });
-
         button2.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
@@ -99,7 +95,6 @@ public class MenuScreen extends AbstractScreen {
                 main.changeScreen("TOP");
             }
         });
-
         button3.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
@@ -107,26 +102,28 @@ public class MenuScreen extends AbstractScreen {
                 Gdx.app.exit();
             }
         });
-
         System.out.println(rootTable.setZIndex(1));
     }
 
+    /**
+     * Creates a dialog for entering player names.
+     *
+     * @param usernameField The text field for the first player's name.
+     * @param passwordField The text field for the second player's name.
+     * @return The dialog for inputting player names.
+     */
     private Dialog ventanDialogo(TextField usernameField, TextField passwordField) {
         Dialog inputDialog = new Dialog("Ventana de Inputs", skin) {
             @Override
             protected void result(Object object) {
                 String user = usernameField.getText();
                 String user2 = passwordField.getText();
-
                 System.out.println("Botón presionado: " + object);
                 System.out.println("\n"+ user2);
                 System.out.println("\n"+ user);
-
                 main.changeScreen("GAME");
             }
-
         };
-
         inputDialog.text("Ingrese Jugador 1 y Jugador 2:");
         return inputDialog;
     }
@@ -142,3 +139,4 @@ public class MenuScreen extends AbstractScreen {
         //super.render(delta);  // Llama a la función render del padre, que dibuja la UI
     }
 }
+

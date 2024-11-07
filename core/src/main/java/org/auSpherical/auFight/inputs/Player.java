@@ -9,6 +9,10 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import org.auSpherical.auFight.Entity;
 import org.auSpherical.auFight.ResourceManager;
 
+/**
+ * Represents a player in the game.
+ * Handles player movement, animations, and input controls.
+ */
 public class Player extends Entity {
     private final float MAX_SPEED = 4.5f;
     private final float GROUND = 0.5f;
@@ -31,6 +35,12 @@ public class Player extends Entity {
     private Animation<TextureRegion> doubleJumpAnimation;
     private float stateTime;
 
+    /**
+     * Constructs a Player with the given input controller and player number.
+     *
+     * @param controller The input controller for the player.
+     * @param num The player number.
+     */
     public Player(PlayerInput controller,int num){
         this.controller = controller;
 
@@ -45,6 +55,10 @@ public class Player extends Entity {
         sprite.setY(FLOOR);
     }
 
+    /**
+     * Updates the player's state.
+     * This method is called every frame to handle movement, animations, and input.
+     */
     @Override
     public void move(){
         controller.update();
@@ -58,6 +72,9 @@ public class Player extends Entity {
         updateDirection();
     }
 
+    /**
+     * Updates the player's direction based on input.
+     */
     private void updateDirection() {
         if ((controller.RIGHT > 0 && lookingRight) && !(controller.LEFT>0)) {
             lookingRight = false;
@@ -66,7 +83,9 @@ public class Player extends Entity {
         }
     }
 
-
+    /**
+     * Updates the player's animation based on state.
+     */
     private void updateAnimation() {
         TextureRegion frame;
         if (!grounded) {
@@ -96,11 +115,14 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * Sets the player's speed based on input and state.
+     */
     private void setSpeed(){
         if (grounded){
             speed.x = clampSpeed(groundFriction(speed.x+(ACCELERATION*(controller.RIGHT-controller.LEFT)),GROUND),1);
         } else {
-            speed.x = clampSpeed(airFriction(speed.x+(ACCELERATION/2)*(controller.RIGHT-controller.LEFT), AIR),2);
+            speed.x = clampSpeed(airFriction(speed.x+(ACCELERATION/2)*(controller.RIGHT-controller.LEFT), AIR),1.5f);
             speed.y += fallingDelta();
         }
 
@@ -110,10 +132,18 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * Calculates the falling delta based on gravity and input.
+     *
+     * @return The calculated falling delta.
+     */
     private float fallingDelta(){
         return -GRAVITY*(1+controller.DOWN)+(ACCELERATION/10)*controller.UP;
     }
 
+    /**
+     * Handles the player's jump logic.
+     */
     private void jump(){
         speed.y = JUMP;
         speed.x = Math.signum((controller.RIGHT-controller.LEFT)/speed.x) == -1f?-0.5f*speed.x:speed.x;
@@ -122,21 +152,53 @@ public class Player extends Entity {
         stateTime = 0;
     }
 
+    /**
+     * Applies air friction to the player's speed.
+     *
+     * @param value The current speed value.
+     * @param absoluteReduction The amount of friction to apply.
+     * @return The adjusted speed value.
+     */
     private float airFriction(float value, float absoluteReduction){
         return Math.signum(value)*(Math.max(0,Math.abs(value)-absoluteReduction));
     }
 
+    /**
+     * Applies ground friction to the player's speed.
+     *
+     * @param value The current speed value.
+     * @param absoluteReduction The amount of friction to apply.
+     * @return The adjusted speed value.
+     */
     private float groundFriction(float value, float absoluteReduction){
         return Math.signum(value)*(Math.max(0,Math.abs(value)-absoluteReduction*movementFrictionReduction(value)));
     }
 
+    /**
+     * Calculates the movement friction reduction based on speed.
+     *
+     * @param value The current speed value.
+     * @return The calculated friction reduction.
+     */
     private float movementFrictionReduction(float value){
         return (1-(Math.max(Math.abs(controller.RIGHT-controller.LEFT),0.5f)*(Math.abs(value)/MAX_SPEED)));
     }
+
+    /**
+     * Clamps the player's speed to a maximum value.
+     *
+     * @param value The current speed value.
+     * @param multiplier The maximum speed multiplier.
+     * @return The clamped speed value.
+     */
     private float clampSpeed(float value,float multiplier){
         return Math.max(-MAX_SPEED*multiplier,Math.min(MAX_SPEED*multiplier,value));
     }
 
+    /**
+     * Handles the player's ground logic.
+     * Checks if the player is grounded and updates the state accordingly.
+     */
     private void ground(){
         if (!grounded){
             grounded = sprite.getY()<= FLOOR;
@@ -150,6 +212,11 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * Renders the player sprite.
+     *
+     * @param batch The batch used for rendering the sprite.
+     */
     // este metodo se encarga de dibujar el sprite
     public void render(Batch batch){
         sprite.draw(batch);

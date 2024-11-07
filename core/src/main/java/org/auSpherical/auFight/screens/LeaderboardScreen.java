@@ -1,6 +1,5 @@
 package org.auSpherical.auFight.screens;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -9,8 +8,18 @@ import com.badlogic.gdx.utils.Align;
 import org.auSpherical.auFight.AuFight;
 import org.auSpherical.auFight.data.LeaderManager;
 
+/**
+ * Represents the leaderboard screen of the game.
+ * This class handles the display of player scores and navigation within the leaderboard.
+ */
 public class LeaderboardScreen extends AbstractScreen {
 
+    /**
+     * Constructs a LeaderboardScreen with the given main game instance.
+     * Initializes the UI elements and sets up the leaderboard display.
+     *
+     * @param main The main game instance.
+     */
     public LeaderboardScreen(AuFight main) {
         super(main);
         Skin skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
@@ -59,6 +68,11 @@ public class LeaderboardScreen extends AbstractScreen {
         });
     }
 
+    /**
+     * Renders the screen. This method is called every frame.
+     *
+     * @param delta The time in seconds since the last render.
+     */
     @Override
     public void render(float delta) {
         super.render(delta);

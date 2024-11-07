@@ -8,12 +8,18 @@ import org.auSpherical.auFight.screens.AuFightScreen;
 import org.auSpherical.auFight.screens.LeaderboardScreen;
 import org.auSpherical.auFight.screens.MenuScreen;
 
+/**
+ * Main class for the AuFight game.
+ * This class handles the game lifecycle and screen navigation.
+ */
 public class AuFight extends Game {
-
     public SpriteBatch batch;
     public BitmapFont font;
     public OrthographicCamera camera;
 
+    /**
+     * Initializes the game, loading necessary resources and setting up the initial screen.
+     */
     @Override
     public void create() {
         batch = new SpriteBatch();
@@ -31,12 +37,23 @@ public class AuFight extends Game {
         super.render();
     }
 
+    /**
+     * Disposes of the game's resources when they are no longer needed.
+     * This method is called when the game is closed.
+     */
     @Override
     public void dispose() {
         batch.dispose();
         font.dispose();
     }
-    public void changeScreen(String screen){
+
+    /**
+     * Changes the current screen of the game based on the given screen name.
+     *
+     * @param screen The name of the screen to switch to. Valid values are "GAME", "MENU", "TOP".
+     *               Defaults to the menu screen if an invalid name is provided.
+     */
+    public void changeScreen(String screen) {
         switch (screen) {
             case "GAME":
                 setScreen(new AuFightScreen(this));
