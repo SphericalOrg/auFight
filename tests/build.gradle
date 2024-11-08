@@ -6,16 +6,14 @@ sourceCompatibility = 20
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 
-
 sourceSets {
 	test {
         java {
             srcDir 'src'
         }
     }
-    
-    
 }
+
 
 eclipse.project {
     name = appName + "-tests"

@@ -78,7 +78,9 @@ project(":tests") {
     sourceSets.test.java.srcDirs = ["src/"]
 
     dependencies {
-        /**
+
+      api "com.badlogicgames.gdx:gdx:$gdxVersion"
+      /**
          * If you do have some classes to test in OS-specific code you may want to uncomment
          * some of these lines.
          *
@@ -95,16 +97,12 @@ project(":tests") {
 
         implementation project(":core")
 
-        implementation "junit:junit:4.+"
-        implementation "org.mockito:mockito-all:1.9.+"
-        implementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
-        implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
-
-        testImplementation "junit:junit:4.+"
-        testImplementation "org.mockito:mockito-all:1.9.+"
-        testImplementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
-        testImplementation "com.badlogicgames.gdx:gdx:$gdxVersion"
-        testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.3'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.3'
     }
+
+  test{
+    useJUnitPlatform()
+  }
 }
 eclipse.project.name = 'auFight' + '-parent'
