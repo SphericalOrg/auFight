@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.auSpherical.auFight.inputs.PlayerTest" tests="5" skipped="0" failures="5" errors="0" timestamp="2024-11-07T23:19:59" hostname="PSYDUCK" time="0.101">
+  <properties/>
+  <testcase name="testPlayerMoveWithJump" classname="org.auSpherical.auFight.inputs.PlayerTest" time="0.032">
+    <failure message="com.badlogic.gdx.utils.GdxRuntimeException: Asset not loaded: cat.atlas" type="com.badlogic.gdx.utils.GdxRuntimeException">com.badlogic.gdx.utils.GdxRuntimeException: Asset not loaded: cat.atlas
+	at app//com.badlogic.gdx.assets.AssetManager.get(AssetManager.java:173)
+	at app//com.badlogic.gdx.assets.AssetManager.get(AssetManager.java:144)
+	at app//org.auSpherical.auFight.ResourceManager.getRegion(ResourceManager.java:23)
+	at app//org.auSpherical.auFight.ResourceManager.createAnimation(ResourceManager.java:29)
+	at app//org.auSpherical.auFight.inputs.Player.&lt;init&gt;(Player.java:37)
+	at app//org.auSpherical.auFight.inputs.PlayerTest.testPlayerMoveWithJump(PlayerTest.java:41)
+	at java.base@22.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base@22.0.2/java.lang.reflect.Method.invoke(Method.java:580)
+	at app//org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at app//org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at app//org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at app//org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at app//org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at app//org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at app//org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at app//org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at app//de.tomgrill.gdxtesting.GdxTestRunner.render(GdxTestRunner.java:59)
+	at app//com.badlogic.gdx.backends.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:128)
+	at app//com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:93)
+</failure>
+  </testcase>
+  <testcase name="testPlayerMoveWithLookingLeft" classname="org.auSpherical.auFight.inputs.PlayerTest" time="0.001">
+    <failure message="com.badlogic.gdx.utils.GdxRuntimeException: Asset not loaded: cat.atlas" type="com.badlogic.gdx.utils.GdxRuntimeException">com.badlogic.gdx.utils.GdxRuntimeException: Asset not loaded: cat.atlas
+	at app//com.badlogic.gdx.assets.AssetManager.get(AssetManager.java:173)
+	at app//com.badlogic.gdx.assets.AssetManager.get(AssetManager.java:144)
+	at app//org.auSpherical.auFight.ResourceManager.getRegion(ResourceManager.java:23)
+	at app//org.auSpherical.auFight.ResourceManager.createAnimation(ResourceManager.java:29)
+	at app//org.auSpherical.auFight.inputs.Player.&lt;init&gt;(Player.java:37)
+	at app//org.auSpherical.auFight.inputs.PlayerTest.testPlayerMoveWithLookingLeft(PlayerTest.java:54)
+	at java.base@22.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base@22.0.2/java.lang.reflect.Method.invoke(Method.java:580)
+	at app//org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at app//org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at app//org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at app//org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at app//org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at app//org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at app//org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at app//org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at app//de.tomgrill.gdxtesting.GdxTestRunner.render(GdxTestRunner.java:59)
+	at app//com.badlogic.gdx.backends.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:128)
+	at app//com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:93)
+</failure>
+  </testcase>
+  <testcase name="testPlayerMoveWithGroundedFalse" classname="org.auSpherical.auFight.inputs.PlayerTest" time="0.001">
+    <failure message="com.badlogic.gdx.utils.GdxRuntimeException: Asset not loaded: cat.atlas" type="com.badlogic.gdx.utils.GdxRuntimeException">com.badlogic.gdx.utils.GdxRuntimeException: Asset not loaded: cat.atlas
+	at app//com.badlogic.gdx.assets.AssetManager.get(AssetManager.java:173)
+	at app//com.badlogic.gdx.assets.AssetManager.get(AssetManager.java:144)
+	at app//org.auSpherical.auFight.ResourceManager.getRegion(ResourceManager.java:23)
+	at app//org.auSpherical.auFight.ResourceManager.createAnimation(ResourceManager.java:29)
+	at app//org.auSpherical.auFight.inputs.Player.&lt;init&gt;(Player.java:37)
+	at app//org.auSpherical.auFight.inputs.PlayerTest.testPlayerMoveWithGroundedFalse(PlayerTest.java:28)
+	at java.base@22.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base@22.0.2/java.lang.reflect.Method.invoke(Method.java:580)
+	at app//org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at app//org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at app//org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at app//org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at app//org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at app//org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at app//org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at app//org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at app//de.tomgrill.gdxtesting.GdxTestRunner.render(GdxTestRunner.java:59)
+	at app//com.badlogic.gdx.backends.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:128)
+	at app//com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:93)
+</failure>
+  </testcase>
+  <testcase name="testPlayerMoveWithLookingRight" classname="org.auSpherical.auFight.inputs.PlayerTest" time="0.0">
+    <failure message="com.badlogic.gdx.utils.GdxRuntimeException: Asset not loaded: cat.atlas" type="com.badlogic.gdx.utils.GdxRuntimeException">com.badlogic.gdx.utils.GdxRuntimeException: Asset not loaded: cat.atlas
+	at app//com.badlogic.gdx.assets.AssetManager.get(AssetManager.java:173)
+	at app//com.badlogic.gdx.assets.AssetManager.get(AssetManager.java:144)
+	at app//org.auSpherical.auFight.ResourceManager.getRegion(ResourceManager.java:23)
+	at app//org.auSpherical.auFight.ResourceManager.createAnimation(ResourceManager.java:29)
+	at app//org.auSpherical.auFight.inputs.Player.&lt;init&gt;(Player.java:37)
+	at app//org.auSpherical.auFight.inputs.PlayerTest.testPlayerMoveWithLookingRight(PlayerTest.java:66)
+	at java.base@22.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base@22.0.2/java.lang.reflect.Method.invoke(Method.java:580)
+	at app//org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at app//org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at app//org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at app//org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at app//org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at app//org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at app//org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at app//org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at app//de.tomgrill.gdxtesting.GdxTestRunner.render(GdxTestRunner.java:59)
+	at app//com.badlogic.gdx.backends.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:128)
+	at app//com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:93)
+</failure>
+  </testcase>
+  <testcase name="testPlayerMoveWithGroundedTrue" classname="org.auSpherical.auFight.inputs.PlayerTest" time="0.0">
+    <failure message="com.badlogic.gdx.utils.GdxRuntimeException: Asset not loaded: cat.atlas" type="com.badlogic.gdx.utils.GdxRuntimeException">com.badlogic.gdx.utils.GdxRuntimeException: Asset not loaded: cat.atlas
+	at app//com.badlogic.gdx.assets.AssetManager.get(AssetManager.java:173)
+	at app//com.badlogic.gdx.assets.AssetManager.get(AssetManager.java:144)
+	at app//org.auSpherical.auFight.ResourceManager.getRegion(ResourceManager.java:23)
+	at app//org.auSpherical.auFight.ResourceManager.createAnimation(ResourceManager.java:29)
+	at app//org.auSpherical.auFight.inputs.Player.&lt;init&gt;(Player.java:37)
+	at app//org.auSpherical.auFight.inputs.PlayerTest.testPlayerMoveWithGroundedTrue(PlayerTest.java:16)
+	at java.base@22.0.2/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base@22.0.2/java.lang.reflect.Method.invoke(Method.java:580)
+	at app//org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at app//org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at app//org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at app//org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at app//org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at app//org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at app//org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at app//org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at app//de.tomgrill.gdxtesting.GdxTestRunner.render(GdxTestRunner.java:59)
+	at app//com.badlogic.gdx.backends.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:128)
+	at app//com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:93)
+</failure>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -72,5 +72,37 @@ subprojects {
     maven { url 'https://jitpack.io' }
   }
 }
+project(":tests") {
+    apply plugin: "java"
 
+    sourceSets.test.java.srcDirs = ["src/"]
+
+    dependencies {
+
+      api "com.badlogicgames.gdx:gdx:$gdxVersion"
+      /**
+         * If you do have some classes to test in OS-specific code you may want to uncomment
+         * some of these lines.
+         *
+         * BUT: I recommend creating separate test subprojects for each platform. Trust me :)
+         */
+
+        // implementation project(":android")
+        // implementation project(":html")
+        // implementation project(":desktop")
+
+        // if(System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0) {
+        //  implementation project(":ios")
+        // }
+
+        implementation project(":core")
+
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.3'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.3'
+    }
+
+  test{
+    useJUnitPlatform()
+  }
+}
 eclipse.project.name = 'auFight' + '-parent'

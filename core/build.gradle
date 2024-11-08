@@ -4,17 +4,9 @@ eclipse.project.name = appName + '-core'
 dependencies {
   api "com.badlogicgames.gdx:gdx:$gdxVersion"
 
-  testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
-  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
   if(enableGraalNative == 'true') {
     implementation "io.github.berstanio:gdx-svmhelper-annotations:$graalHelperVersion"
   }
   // https://mvnrepository.com/artifact/com.github.strikerx3/jxinput
   implementation group: 'com.github.strikerx3', name: 'jxinput', version: '1.0.0'
-}
-
-tasks.named('test') {
-  // Use JUnit Platform for unit tests.
-  useJUnitPlatform()
 }
