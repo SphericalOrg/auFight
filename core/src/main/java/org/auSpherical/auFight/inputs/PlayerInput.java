@@ -1,6 +1,6 @@
 package org.auSpherical.auFight.inputs;
 
-public abstract class PlayerInput {
+public class PlayerInput {
     public boolean hasPlayer = false;
     public float LEFT;
     public float RIGHT;
