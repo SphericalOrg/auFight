@@ -6,13 +6,13 @@ import org.auSpherical.auFight.inputs.Player;
 public class GameLogicManager {
 
     AuFight main;
-    Cat player1;
-    Cat player2;
+    Player player1;
+    Player player2;
 
     public GameLogicManager(AuFight main) {
         this.main = main;
-        player1 = new Cat(new Player(new KeyboardInput(true),1));
-        player2 = new Cat(new Player(new KeyboardInput(true),1));
+        player1 = new Player(new KeyboardInput(true),1);
+        player2 = new Player(new KeyboardInput(false),2);
     }
     //aqui va donde deberias actualizar la logica del juego
     public void update(float delta) {
