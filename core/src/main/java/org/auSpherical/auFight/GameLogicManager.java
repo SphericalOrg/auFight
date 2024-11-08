@@ -1,4 +1,3 @@
-//esta clase sirve para hacer la logica de los sprites
 package org.auSpherical.auFight;
 
 import org.auSpherical.auFight.inputs.KeyboardInput;
