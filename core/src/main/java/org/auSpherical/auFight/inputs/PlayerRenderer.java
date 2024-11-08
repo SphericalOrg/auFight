@@ -1,9 +1,6 @@
 package org.auSpherical.auFight.inputs;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.*;
 import org.auSpherical.auFight.ResourceManager;
 
 public class PlayerRenderer {
@@ -45,7 +42,7 @@ public class PlayerRenderer {
         sprite.setOriginCenter();
     }
 
-    public void render(Batch batch, float x, float y, boolean lookingRight) {
+    public void render(SpriteBatch batch, float x, float y, boolean lookingRight) {
         sprite.setPosition(x, y);
         sprite.setFlip(lookingRight, false);
         sprite.draw(batch);

@@ -18,9 +18,9 @@ public class RenderManager {
     PlayerRenderer player1Renderer;
     PlayerRenderer player2Renderer;
 
-    public RenderManager(GameLogicManager gameLogicManager, Batch batch) {
+    public RenderManager(GameLogicManager gameLogicManager, SpriteBatch batch) {
         this.gameLogicManager = gameLogicManager;
-        this.batch = (SpriteBatch) batch;
+        this.batch = batch;
         font = new BitmapFont();
         background = new Sprite(new Texture("stage.png"));
         background.setSize(1600, 900);
