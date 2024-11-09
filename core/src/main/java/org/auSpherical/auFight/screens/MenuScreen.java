@@ -54,12 +54,15 @@ public class MenuScreen extends AbstractScreen {
 
         button1.setTransform(true);  // Permitir transformación
         button1.setScale(2f);  // Escalar el botón a 7.5 veces su tamaño normal
+        button1.setName("button1");
 
         button2.setTransform(true);
         button2.setScale(2f);
+        button2.setName("button2");
 
         button3.setTransform(true);
         button3.setScale(2f);
+        button3.setName("button3");
 
         // Añadir los botones a la tabla
         rootTable.add(button1).pad(10f);
