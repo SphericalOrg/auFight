@@ -7,9 +7,9 @@ import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
 public class ControllerInput extends PlayerInput {
     private final double DEAD_ZONE = 0.133;
     private final double TRIGGER_DEAD_ZONE = 0.3;
-    private final XInputDevice DEVICE;
+    public final XInputDevice DEVICE;
     private final XInputAxes AXES;
-    private final XInputButtons BUTTONS;
+    private XInputButtons BUTTONS;
     private final XInputButtonsDelta BUTTONS_DELTA;
     private boolean leftTriggerFuse = true;
     private boolean rightTriggerFuse = true;
@@ -17,8 +17,8 @@ public class ControllerInput extends PlayerInput {
     public boolean LB;
     public boolean RT;
     public boolean RB;
-    public ControllerInput(int playerNum) throws XInputNotLoadedException {
-        DEVICE = XInputDevice.getDeviceFor(playerNum);
+    public ControllerInput(XInputDevice device) throws XInputNotLoadedException {
+        DEVICE = device;
         AXES = DEVICE.getComponents().getAxes();
         BUTTONS = DEVICE.getComponents().getButtons();
         BUTTONS_DELTA = DEVICE.getDelta().getButtons();
@@ -33,10 +33,9 @@ public class ControllerInput extends PlayerInput {
         update();
         return !hasPlayer && anyPressed();
     }
-    private boolean anyPressed(){
-        return
-                BUTTONS.b||BUTTONS.a||BUTTONS.x||BUTTONS.y|| BUTTONS.rShoulder || BUTTONS.lShoulder ||
-                        valueDeltaY()!=0 || valueDeltaX()!=0 || AXES.lt>= TRIGGER_DEAD_ZONE || AXES.rt>= TRIGGER_DEAD_ZONE;
+    private boolean anyPressed() {
+        System.out.println(BUTTONS);
+        return BUTTONS.a || BUTTONS.b || BUTTONS.x || BUTTONS.y || BUTTONS.start || BUTTONS.back || BUTTONS.up || BUTTONS.down || BUTTONS.left || BUTTONS.right;
     }
     private void setInputValues() {
         A = BUTTONS_DELTA.isPressed(XInputButton.A);
