@@ -27,7 +27,7 @@ public class MenuScreen extends AbstractScreen {
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
         // Crear tabla raíz
-        Table rootTable = new Table(skin);
+        rootTable = new Table(skin);
         rootTable.setBackground("window");
         rootTable.setFillParent(true);
         rootTable.defaults().align(Align.left);
