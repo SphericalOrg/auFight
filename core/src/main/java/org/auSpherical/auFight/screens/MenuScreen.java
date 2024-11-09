@@ -19,9 +19,11 @@ import org.auSpherical.auFight.AuFight;
 public class MenuScreen extends AbstractScreen {
 
     private final Skin skin;
+    public Table rootTable;
 
     public MenuScreen(AuFight main) {
         super(main);
+
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
         // Crear tabla raíz
@@ -40,6 +42,7 @@ public class MenuScreen extends AbstractScreen {
 
 
         Label label = new Label("auFight", skin);
+        label.setName("gameTitle");
         label.setFontScale(7.5f);  // Escalar el texto para que sea grande
         label.setAlignment(Align.center);
         rootTable.add(label).colspan(3).padBottom(20f);  // Añadir el texto en el centro
@@ -74,6 +77,7 @@ public class MenuScreen extends AbstractScreen {
                 TextField username2Field = new TextField("", skin);
 
                 Dialog inputDialog = ventanDialogo(usernameField, username2Field);
+                inputDialog.setName("inputDialog");
                 inputDialog.row();
                 inputDialog.add(new Label("Jugador 1: ", skin));
                 inputDialog.add(usernameField).width(200);
@@ -108,7 +112,6 @@ public class MenuScreen extends AbstractScreen {
             }
         });
 
-        System.out.println(rootTable.setZIndex(1));
     }
 
     private Dialog ventanDialogo(TextField usernameField, TextField passwordField) {
