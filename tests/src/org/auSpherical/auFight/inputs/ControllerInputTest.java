@@ -1,6 +1,7 @@
 package org.auSpherical.auFight.inputs;
 
 import com.github.strikerx3.jxinput.*;
+import com.github.strikerx3.jxinput.enums.XInputAxis;
 import com.github.strikerx3.jxinput.enums.XInputButton;
 import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,8 +36,9 @@ class ControllerInputTest {
 void interactedReturnsTrueWhenMultipleButtonsPressed() {
     mockButtons.a = true;
     mockButtons.b = true;
+    mockButtonsDelta.setPressed(XInputButton.A, true);
+    mockButtonsDelta.setPressed(XInputButton.B, true);
     controllerInput.update();
-    System.out.println(controllerInput.DEVICE.getComponents().getButtons());
     assertTrue(controllerInput.interacted());
 }
 
@@ -44,13 +46,14 @@ void interactedReturnsTrueWhenMultipleButtonsPressed() {
 void interactedReturnsFalseWhenNoButtonsPressed() {
     mockButtons.a = false;
     mockButtons.b = false;
+    mockButtonsDelta.setPressed(XInputButton.A, false);
+    mockButtonsDelta.setPressed(XInputButton.B, false);
     controllerInput.update();
     assertFalse(controllerInput.interacted());
 }
 
 @Test
 void leftTriggerSetsCorrectValueWhenPressed() {
-    mockButtonsDelta.setPressed(XInputButton.LEFT_SHOULDER, true);
     mockAxes.lt = 0.4f;
     controllerInput.update();
     assertTrue(controllerInput.LT);
@@ -58,7 +61,6 @@ void leftTriggerSetsCorrectValueWhenPressed() {
 
 @Test
 void rightTriggerSetsCorrectValueWhenPressed() {
-    mockButtonsDelta.setPressed(XInputButton.RIGHT_SHOULDER, true);
     mockAxes.rt = 0.4f;
     controllerInput.update();
     assertTrue(controllerInput.RT);
@@ -198,6 +200,28 @@ class MockXInputComponentsDelta extends XInputComponentsDelta {
 
 class MockXInputAxes extends XInputAxes {
     public float lx, ly, lt, rt;
+
+    @Override
+    public float get(XInputAxis axis) {
+        switch (axis) {
+            case LEFT_THUMBSTICK_X:
+                return this.lx;
+            case LEFT_THUMBSTICK_Y:
+                return this.ly;
+            case RIGHT_THUMBSTICK_X:
+                return this.rx;
+            case RIGHT_THUMBSTICK_Y:
+                return this.ry;
+            case LEFT_TRIGGER:
+                return this.lt;
+            case RIGHT_TRIGGER:
+                return this.rt;
+            case DPAD:
+                return (float)this.dpad;
+            default:
+                return 0.0F;
+        }
+    }
 }
 
 class MockXInputButtons extends XInputButtons {
