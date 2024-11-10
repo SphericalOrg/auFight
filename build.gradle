@@ -108,7 +108,7 @@ project(":tests") {
 
   test{
     useJUnitPlatform()
-    exclude '**/MenuScreenTest.class'
+    // exclude '**/MenuScreenTest.class'
   }
 }
 eclipse.project.name = 'auFight' + '-parent'
