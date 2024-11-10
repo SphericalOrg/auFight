@@ -6,6 +6,7 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
 import org.auSpherical.auFight.AuFight;
 import org.auSpherical.auFight.ResourceManager;
 import org.auSpherical.auFight.screens.AbstractScreen;
@@ -85,7 +86,11 @@ public class GraphicTestRunner {
             public AbstractScreen typeOfScreen(String screen) {
                 switch (screen) {
                     case "GAME" -> {
-                        return new AuFightScreen(this);
+                        try {
+                            return new AuFightScreen(this);
+                        } catch (XInputNotLoadedException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                     case "TOP" -> {
                         return new LeaderboardScreen(this);
