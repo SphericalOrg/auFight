@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
+import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
 import org.auSpherical.auFight.AuFight;
 import org.auSpherical.auFight.data.LeaderManager;
 
@@ -54,7 +55,11 @@ public class LeaderboardScreen extends AbstractScreen {
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                main.changeScreen("menu");
+                try {
+                    main.changeScreen("menu");
+                } catch (XInputNotLoadedException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }
