@@ -1,5 +1,8 @@
 package org.auSpherical.auFight;
 
+import com.github.strikerx3.jxinput.XInputDevice;
+import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
+import org.auSpherical.auFight.inputs.ControllerInput;
 import org.auSpherical.auFight.inputs.KeyboardInput;
 import org.auSpherical.auFight.inputs.Player;
 
@@ -9,9 +12,10 @@ public class GameLogicManager {
     Player player1;
     Player player2;
 
-    public GameLogicManager(AuFight main) {
+    public GameLogicManager(AuFight main) throws XInputNotLoadedException {
         this.main = main;
-        player1 = new Player(new KeyboardInput(true),1);
+
+        player1 = new Player(new ControllerInput(XInputDevice.getDeviceFor(0)),1);
         player2 = new Player(new KeyboardInput(false),2);
     }
     //aqui va donde deberias actualizar la logica del juego

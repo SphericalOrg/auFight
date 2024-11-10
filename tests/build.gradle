@@ -18,7 +18,11 @@ sourceSets {
 
     }
 }
+dependencies {
+    implementation group: 'com.github.strikerx3', name: 'jxinput', version: '1.0.0'
+    testImplementation 'org.mockito:mockito-core:4.0.0'
 
+}
 
 eclipse.project {
     name = appName + "-tests"
