@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
 import org.auSpherical.auFight.AuFight;
 
 
@@ -96,7 +97,11 @@ public class MenuScreen extends AbstractScreen {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 System.out.println("Botón 2 presionado");
-                main.changeScreen("TOP");
+                try {
+                    main.changeScreen("TOP");
+                } catch (XInputNotLoadedException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -122,7 +127,11 @@ public class MenuScreen extends AbstractScreen {
                 System.out.println("\n"+ user2);
                 System.out.println("\n"+ user);
 
-                main.changeScreen("GAME");
+                try {
+                    main.changeScreen("GAME");
+                } catch (XInputNotLoadedException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
         };
