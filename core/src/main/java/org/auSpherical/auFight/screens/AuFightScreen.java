@@ -1,4 +1,3 @@
-//screen principal donde se va a ejecutar el juego
 package org.auSpherical.auFight.screens;
 
 import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
@@ -22,7 +21,7 @@ public class AuFightScreen extends AbstractScreen {
     public void render(float delta) {
         super.render(delta);
         ResourceManager.update();
-        gameLogicManager.update(delta);
+        gameLogicManager.update();
         renderManager.draw();
     }
     @Override

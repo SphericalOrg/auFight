@@ -2,7 +2,7 @@ package org.auSpherical.auFight.inputs;
 
 import static org.junit.jupiter.api.Assertions.*;
 import com.badlogic.gdx.math.Vector2;
-import org.junit.jupiter.api.BeforeAll;
+import org.auSpherical.auFight.Physics;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +14,8 @@ public class PlayerTest {
     @BeforeEach
     public void setUp() {
         mockInput = new PlayerInput();
-        player = new Player(mockInput, 1);
+        Physics physics = new Physics();
+        player = new Player(mockInput, 1, physics);
     }
 
 
