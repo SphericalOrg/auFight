@@ -1,14 +1,14 @@
-package org.auSpherical.auFight.inputs;
+package org.auSpherical.auFight.rendered;
 
 import com.badlogic.gdx.graphics.g2d.*;
 import org.auSpherical.auFight.ResourceManager;
 
 public class PlayerRenderer {
-    private Sprite sprite;
-    private Animation<TextureRegion> idleAnimation;
-    private Animation<TextureRegion> walkAnimation;
-    private Animation<TextureRegion> jumpAnimation;
-    private Animation<TextureRegion> doubleJumpAnimation;
+    private final Sprite sprite;
+    private final Animation<TextureRegion> idleAnimation;
+    private final Animation<TextureRegion> walkAnimation;
+    private final Animation<TextureRegion> jumpAnimation;
+    private final Animation<TextureRegion> doubleJumpAnimation;
     private float stateTime;
 
     public PlayerRenderer(int num) {

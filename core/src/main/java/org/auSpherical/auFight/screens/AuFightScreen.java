@@ -1,4 +1,3 @@
-//screen principal donde se va a ejecutar el juego
 package org.auSpherical.auFight.screens;
 
 import org.auSpherical.auFight.AuFight;
@@ -21,7 +20,7 @@ public class AuFightScreen extends AbstractScreen {
     public void render(float delta) {
         super.render(delta);
         ResourceManager.update();
-        gameLogicManager.update(delta);
+        gameLogicManager.update();
         renderManager.draw();
     }
     @Override
