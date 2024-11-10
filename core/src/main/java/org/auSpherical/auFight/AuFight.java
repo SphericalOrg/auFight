@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
 import org.auSpherical.auFight.screens.AuFightScreen;
 import org.auSpherical.auFight.screens.LeaderboardScreen;
 import org.auSpherical.auFight.screens.MenuScreen;
@@ -36,7 +37,7 @@ public class AuFight extends Game {
         batch.dispose();
         font.dispose();
     }
-    public void changeScreen(String screen){
+    public void changeScreen(String screen) throws XInputNotLoadedException {
         switch (screen) {
             case "GAME":
                 setScreen(new AuFightScreen(this));
