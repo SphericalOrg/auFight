@@ -11,6 +11,7 @@ buildscript {
   dependencies {
     classpath "org.docstr:gwt-gradle-plugin:$gwtPluginVersion"
   }
+
 }
 
 plugins {
@@ -73,11 +74,16 @@ subprojects {
   }
 }
 project(":tests") {
-    apply plugin: "java"
+  apply plugin: "java"
 
-    sourceSets.test.java.srcDirs = ["src/"]
+  sourceSets {
+    test {
+      java.srcDirs = ["src/"]
+      resources.srcDirs = ["src/", "${project.rootDir}/assets"]
+    }
+  }
 
-    dependencies {
+  dependencies {
 
       api "com.badlogicgames.gdx:gdx:$gdxVersion"
       /**
@@ -103,6 +109,7 @@ project(":tests") {
 
   test{
     useJUnitPlatform()
+    // exclude '**/MenuScreenTest.class'
   }
 }
 eclipse.project.name = 'auFight' + '-parent'

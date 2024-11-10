@@ -13,19 +13,22 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
 import org.auSpherical.auFight.AuFight;
 
 
 public class MenuScreen extends AbstractScreen {
 
     private final Skin skin;
+    public Table rootTable;
 
     public MenuScreen(AuFight main) {
         super(main);
+
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
         // Crear tabla raíz
-        Table rootTable = new Table(skin);
+        rootTable = new Table(skin);
         rootTable.setBackground("window");
         rootTable.setFillParent(true);
         rootTable.defaults().align(Align.left);
@@ -40,6 +43,7 @@ public class MenuScreen extends AbstractScreen {
 
 
         Label label = new Label("auFight", skin);
+        label.setName("gameTitle");
         label.setFontScale(7.5f);  // Escalar el texto para que sea grande
         label.setAlignment(Align.center);
         rootTable.add(label).colspan(3).padBottom(20f);  // Añadir el texto en el centro
@@ -51,12 +55,15 @@ public class MenuScreen extends AbstractScreen {
 
         button1.setTransform(true);  // Permitir transformación
         button1.setScale(2f);  // Escalar el botón a 7.5 veces su tamaño normal
+        button1.setName("button1");
 
         button2.setTransform(true);
         button2.setScale(2f);
+        button2.setName("button2");
 
         button3.setTransform(true);
         button3.setScale(2f);
+        button3.setName("button3");
 
         // Añadir los botones a la tabla
         rootTable.add(button1).pad(10f);
@@ -74,6 +81,7 @@ public class MenuScreen extends AbstractScreen {
                 TextField username2Field = new TextField("", skin);
 
                 Dialog inputDialog = ventanDialogo(usernameField, username2Field);
+                inputDialog.setName("inputDialog");
                 inputDialog.row();
                 inputDialog.add(new Label("Jugador 1: ", skin));
                 inputDialog.add(usernameField).width(200);
@@ -96,7 +104,11 @@ public class MenuScreen extends AbstractScreen {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 System.out.println("Botón 2 presionado");
-                main.changeScreen("TOP");
+                try {
+                    main.changeScreen("TOP");
+                } catch (XInputNotLoadedException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -108,7 +120,6 @@ public class MenuScreen extends AbstractScreen {
             }
         });
 
-        System.out.println(rootTable.setZIndex(1));
     }
 
     private Dialog ventanDialogo(TextField usernameField, TextField passwordField) {
@@ -122,7 +133,11 @@ public class MenuScreen extends AbstractScreen {
                 System.out.println("\n"+ user2);
                 System.out.println("\n"+ user);
 
-                main.changeScreen("GAME");
+                try {
+                    main.changeScreen("GAME");
+                } catch (XInputNotLoadedException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
         };
