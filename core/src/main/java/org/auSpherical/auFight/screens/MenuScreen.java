@@ -27,7 +27,38 @@ public class MenuScreen extends AbstractScreen {
 
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
-        // Crear tabla raíz
+        setRootTable();
+
+        setTitle();
+
+        setButtons();
+
+    }
+
+    public void setButtons(){
+        TextButton button1 = createButton("button1","Partida Rapida");
+        TextButton button2 = createButton("button2", "Marcadores");
+        TextButton button3 = createButton("button3","Salir");
+
+        setElementOnTable(button1);
+        setElementOnTable(button2);
+        setElementOnTable(button3);
+
+        button1.addListener(createDialogListener());
+        button2.addListener(createLeaderListener());
+        button3.addListener(createExitListener());
+    }
+
+    public TextButton createButton(String buttonName, String buttonText){
+        TextButton button = new TextButton(buttonText, skin);
+        button.setTransform(true);  // Permitir transformación
+        button.setScale(2f);  // Escalar el botón a 7.5 veces su tamaño normal
+        button.setName(buttonName);
+        button.setProgrammaticChangeEvents(true);
+        return button;
+    }
+
+    public void setRootTable(){
         rootTable = new Table(skin);
         rootTable.setBackground("window");
         rootTable.setFillParent(true);
@@ -36,124 +67,88 @@ public class MenuScreen extends AbstractScreen {
         rootTable.pad(150f);
         rootTable.defaults().space(50f);
         addActor(rootTable);
+    }
 
-        //Texture backgoround = new Texture(Gdx.files.internal("patrick.png"));  // Asegúrate de tener esta imagen
-
-        //Sprite sprite = new Sprite(backgoround);
-
-
+    public void setTitle(){
         Label label = new Label("auFight", skin);
         label.setName("gameTitle");
         label.setFontScale(7.5f);  // Escalar el texto para que sea grande
         label.setAlignment(Align.center);
         rootTable.add(label).colspan(3).padBottom(20f);  // Añadir el texto en el centro
         rootTable.row();
-
-        TextButton button1 = new TextButton("Partida Rapida", skin);
-        TextButton button2 = new TextButton("Marcadores", skin);
-        TextButton button3 = new TextButton("Salir", skin);
-
-        button1.setTransform(true);  // Permitir transformación
-        button1.setScale(2f);  // Escalar el botón a 7.5 veces su tamaño normal
-        button1.setName("button1");
-
-        button2.setTransform(true);
-        button2.setScale(2f);
-        button2.setName("button2");
-
-        button3.setTransform(true);
-        button3.setScale(2f);
-        button3.setName("button3");
-
-        // Añadir los botones a la tabla
-        rootTable.add(button1).pad(10f);
-        rootTable.row();
-        rootTable.add(button2).pad(10f);
-        rootTable.row();
-        rootTable.add(button3).pad(10f);
-        rootTable.row();
-
-        button1.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeListener.ChangeEvent event, Actor actor)
-            {
-                TextField usernameField = new TextField("", skin);
-                TextField username2Field = new TextField("", skin);
-
-                Dialog inputDialog = ventanDialogo(usernameField, username2Field);
-                inputDialog.setName("inputDialog");
-                inputDialog.row();
-                inputDialog.add(new Label("Jugador 1: ", skin));
-                inputDialog.add(usernameField).width(200);
-
-                inputDialog.add(new Label("Jugador 2: ", skin));
-                //passwordField.setPasswordMode(false);  // Modo de contraseña (oculta texto)
-                //passwordField.setPasswordCharacter('*');
-                inputDialog.add(username2Field).width(200);
-
-                inputDialog.key(Keys.ENTER, true);  // Asignar Enter para confirmar
-                inputDialog.key(Keys.ESCAPE, false);  // Asignar Escape para cancelar
-
-                System.out.println(username2Field.getText());
-                // Mostrar el diálogo
-                inputDialog.show(MenuScreen.this);
-            }
-        });
-
-        button2.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                System.out.println("Botón 2 presionado");
-                try {
-                    main.changeScreen("TOP");
-                } catch (XInputNotLoadedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-
-        button3.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                System.out.println("Botón 3 presionado");
-                Gdx.app.exit();
-            }
-        });
-
     }
 
-    private Dialog ventanDialogo(TextField usernameField, TextField passwordField) {
+    public void setElementOnTable(Actor actor){
+        rootTable.add(actor).pad(10f).row();
+    }
+
+    private Dialog createDialog(TextField usernameField, TextField username2Field) {
         Dialog inputDialog = new Dialog("Ventana de Inputs", skin) {
             @Override
             protected void result(Object object) {
-                String user = usernameField.getText();
-                String user2 = passwordField.getText();
-
-                System.out.println("Botón presionado: " + object);
-                System.out.println("\n"+ user2);
-                System.out.println("\n"+ user);
-
                 try {
                     main.changeScreen("GAME");
                 } catch (XInputNotLoadedException e) {
                     throw new RuntimeException(e);
                 }
             }
-
         };
-
-        inputDialog.text("Ingrese Jugador 1 y Jugador 2:");
+        addDialogLogic(inputDialog,usernameField,username2Field);
         return inputDialog;
+    }
+
+    private void addDialogLogic(Dialog inputDialog, TextField usernameField, TextField username2Field ){
+        inputDialog.setName("inputDialog");
+
+        inputDialog.row();
+        inputDialog.add(new Label("Jugador 1: ", skin));
+        inputDialog.add(usernameField).width(200);
+
+        inputDialog.add(new Label("Jugador 2: ", skin));
+        inputDialog.add(username2Field).width(200);
+
+        inputDialog.key(Keys.ENTER, true).key(Keys.ESCAPE, false).text("Ingrese Jugador 1 y Jugador 2:");
+    }
+
+
+    private ChangeListener createDialogListener() {
+        return new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                TextField usernameField = new TextField("", skin);
+                TextField username2Field = new TextField("", skin);
+
+                Dialog inputDialog = createDialog(usernameField, username2Field);
+
+                inputDialog.show(MenuScreen.this);
+            }
+        };
+    }
+
+    private ChangeListener createLeaderListener() {
+        return new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                try {
+                    main.changeScreen("TOP");
+                } catch (XInputNotLoadedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+    }
+
+    private ChangeListener createExitListener() {
+        return new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                Gdx.app.exit();
+            }
+        };
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
-        //main.batch.begin();
-        //sprite.setPosition(0, 0);  // Posicionar el fondo en la esquina inferior izquierda
-        //sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        //sprite.draw(main.batch, 0.5f);
-        //main.batch.end();
-        //super.render(delta);  // Llama a la función render del padre, que dibuja la UI
     }
 }
