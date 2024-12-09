@@ -79,7 +79,7 @@ public class LeaderboardScreen extends AbstractScreen {
         submitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                String jsonData = "";
+                String jsonData;
                 try {
                     String name = nameField.getText();
                     int wins = Integer.parseInt(winsField.getText());
