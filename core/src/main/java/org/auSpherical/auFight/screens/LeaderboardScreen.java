@@ -24,7 +24,6 @@ public class LeaderboardScreen extends AbstractScreen {
 
     public LeaderboardScreen(AuFight main) {
         super(main);
-        Skin skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
         rootTable = new Table(skin);
@@ -36,6 +35,7 @@ public class LeaderboardScreen extends AbstractScreen {
         rootTable.add(label).colspan(3).padBottom(20f);
         rootTable.row();
 
+        rootTable.add(submitData());
 
 
         setLeaderboard();
@@ -48,8 +48,81 @@ public class LeaderboardScreen extends AbstractScreen {
         super.render(delta);
     }
 
+    private Table submitData() {
+        Table submitTable = new Table(skin);
 
-        Table rootTable = new Table(skin);
+        Label submitLabel = new Label("Debug", skin);
+        submitLabel.setAlignment(Align.center);
+        submitTable.add(submitLabel).colspan(3).padTop(50f);
+        submitTable.row();
+
+        TextField nameField = new TextField("", skin);
+        nameField.setMessageText("Name");
+        TextField winsField = new TextField("", skin);
+        winsField.setMessageText("Wins");
+        TextField punctuationField = new TextField("", skin);
+        punctuationField.setMessageText("Punctuation");
+
+        submitTable.add(new Label("Name: ", skin));
+        submitTable.add(nameField).width(200);
+        submitTable.row();
+        submitTable.add(new Label("Wins: ", skin));
+        submitTable.add(winsField).width(200);
+        submitTable.row();
+        submitTable.add(new Label("Punctuation: ", skin));
+        submitTable.add(punctuationField).width(200);
+        submitTable.row();
+
+        TextButton submitButton = new TextButton("Submit", skin);
+        submitTable.add(submitButton).colspan(3);
+
+        submitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                String jsonData = "";
+                try {
+                    String name = nameField.getText();
+                    int wins = Integer.parseInt(winsField.getText());
+                    int punctuation = Integer.parseInt(punctuationField.getText());
+                    jsonData = (new Punctuation(name, wins, punctuation)).serialize();
+
+                } catch (NumberFormatException e) {
+                    Gdx.app.error("Leaderboard", "Invalid input", e);
+                    return;
+                }
+
+                Net.HttpRequest request = new Net.HttpRequest(Net.HttpMethods.POST);
+                request.setUrl("http://localhost:8080/leaderboard/add");
+                request.setHeader("Content-Type", "application/json");
+                request.setContent(jsonData);
+                Gdx.net.sendHttpRequest(request, new Net.HttpResponseListener() {
+                    @Override
+                    public void handleHttpResponse(Net.HttpResponse httpResponse) {
+                        Gdx.app.log("HTTP Request", "Data sent successfully");
+                    }
+
+                    @Override
+                    public void failed(Throwable t) {
+                        Gdx.app.error("HTTP Request", "Failed to send data", t);
+                    }
+
+                    @Override
+                    public void cancelled() {
+                        Gdx.app.log("HTTP Request", "Request cancelled");
+                    }
+                });
+
+                try {
+
+                    main.changeScreen("TOP");
+                } catch (XInputNotLoadedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        return submitTable;
+    }
+
     private TextButton backButton() {
         TextButton backButton = new TextButton("Back", skin);
         backButton.addListener(new ClickListener() {
