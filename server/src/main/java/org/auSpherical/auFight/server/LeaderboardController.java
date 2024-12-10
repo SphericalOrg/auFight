@@ -1,4 +1,4 @@
-package org.spherical.auserver;
+package org.auSpherical.auFight.server;
 
 import org.springframework.web.bind.annotation.*;
 

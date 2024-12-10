@@ -1,4 +1,4 @@
-package org.spherical.auserver;
+package org.auSpherical.auFight.server;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
