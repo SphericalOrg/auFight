@@ -29,10 +29,14 @@ public class LeaderboardScreen extends AbstractScreen {
         rootTable = new Table(skin);
         setRootTable();
 
+        TextButton backButton = backButton();
+        rootTable.add(backButton);
+        rootTable.row();
+
         Label label = new Label("Leaderboard", skin);
-        label.setFontScale(7.5f);
+        label.setFontScale(5.5f);
         label.setAlignment(Align.center);
-        rootTable.add(label).colspan(3).padBottom(20f);
+        rootTable.add(label).align(Align.center);
         rootTable.row();
 
         rootTable.add(submitData());
@@ -113,7 +117,6 @@ public class LeaderboardScreen extends AbstractScreen {
                 });
 
                 try {
-
                     main.changeScreen("TOP");
                 } catch (XInputNotLoadedException e) {
                     throw new RuntimeException(e);
@@ -208,20 +211,25 @@ public class LeaderboardScreen extends AbstractScreen {
                 rootTable.add(leaderboardTable).colspan(3);
                 rootTable.row();
 
-                TextButton backButton = backButton();
-                rootTable.add(backButton).colspan(3).padTop(50f);
-                rootTable.row();
 
             }
 
             @Override
             public void failed(Throwable t) {
                 Gdx.app.error("HTTP Request", "Failed to get leaderboard data", t);
+                Table leaderboardTable = mapLeaderboardTable(new ArrayList<>());
+                rootTable.add(leaderboardTable).colspan(3);
+                rootTable.row();
+
+
             }
 
             @Override
             public void cancelled() {
                 Gdx.app.log("HTTP Request", "Request cancelled");
+                Table leaderboardTable = mapLeaderboardTable(new ArrayList<>());
+                rootTable.add(leaderboardTable).colspan(3);
+                rootTable.row();
             }
         });
     }
