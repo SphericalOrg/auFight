@@ -16,7 +16,7 @@ public class Shield extends Entity implements Damageable {
     }
 
     @Override
-    public void receiveDamage(int damage) {
+    public void receiveDamage(float damage) {
 
     }
 }
