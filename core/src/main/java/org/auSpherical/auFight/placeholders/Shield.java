@@ -4,12 +4,6 @@ public class Shield implements Damageable {
 
     public int health = 100;
 
-    private boolean isActive;
-
-
-    public boolean isActive(){
-        return isActive;
-    }
 
     public void regenerar(int amm) {
         this.health += amm;
