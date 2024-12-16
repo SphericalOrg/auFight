@@ -51,7 +51,7 @@ public class RenderManager {
     }
 
     private void renderPlayer(Player player, PlayerRenderer renderer) {
-        renderer.updateAnimation(player.isGrounded(), player.doubleJump, player.getSpeed().x, Gdx.graphics.getDeltaTime());
+        renderer.updateAnimation(player.isGrounded(), player.canDoubleJump, player.getSpeed().x, Gdx.graphics.getDeltaTime());
         renderer.render(batch, player.getPosition().x, player.getPosition().y, player.lookingRight);
     }
 }
