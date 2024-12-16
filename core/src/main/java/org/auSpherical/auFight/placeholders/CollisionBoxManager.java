@@ -31,6 +31,9 @@ public class CollisionBoxManager {
         while (hitBoxIterator.hasNext()) {
             HitBox hitBox = hitBoxIterator.next();
             hitBox.update();
+            if (hitBox.duration <= 0) {
+                removeHitBox(hitBox);
+            }
             hitBox.render(new ShapeRenderer());
         }
     }
