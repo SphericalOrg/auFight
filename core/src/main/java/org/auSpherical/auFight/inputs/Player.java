@@ -12,11 +12,11 @@ import org.auSpherical.auFight.placeholders.Shield;
 public class Player extends Entity {
     public boolean canDoubleJump = true;
     private final PlayerInput controller;
-    public boolean lookingRight = false;
+    public boolean lookingLeft = false;
     private boolean grounded = true;
     private final Vector2 speed = new Vector2(0, 0);
     private final Vector2 position;
-    private boolean shieldActive = false;
+    public boolean shieldActive = false;
     private Shield shield;
     private int generalCD = 0;
     private int jumpCD = 0;
@@ -92,15 +92,13 @@ public class Player extends Entity {
     }
 
     private void meleeAttack(){
-        HitBox hitbox = new HitBox(position.add(lookingRight ? 50 : -50, 0), 10, this);
-        collitionManager.addHitBox(hitbox);
+        collitionManager.addHitBox(new HitBox(new Vector2(position).add(lookingLeft ? -50 : 50, -5), 10, this , new Vector2(0,0), 20, 200));
         actionCD = 30;
-        generalCD = 200;
+        generalCD = 20;
     }
 
     private void rangedAttack(){
-        HitBox hitbox = new HitBox(position.add(lookingRight ? 50 : -50, 0), 10, this);
-        collitionManager.addHitBox(hitbox);
+        collitionManager.addHitBox(new HitBox(new Vector2(position).add(lookingLeft ? -50 : 50, 5), 10, this , new Vector2(50,0), 10, 5));
         actionCD = 60;
         generalCD = 10;
     }
@@ -122,18 +120,18 @@ public class Player extends Entity {
     }
 
     private void updateDirection() {
-        if ((controller.RIGHT > 0 && lookingRight) && !(controller.LEFT > 0)) {
-            lookingRight = false;
-        } else if ((controller.LEFT > 0 && !lookingRight) && !(controller.RIGHT > 0)) {
-            lookingRight = true;
+        if ((controller.RIGHT > 0 && lookingLeft) && !(controller.LEFT > 0)) {
+            lookingLeft = false;
+        } else if ((controller.LEFT > 0 && !lookingLeft) && !(controller.RIGHT > 0)) {
+            lookingLeft = true;
         }
     }
 
     private void setSpeed() {
         if (grounded) {
-            speed.x = physics.clampSpeed(physics.groundFriction(speed.x + (performMovement()), AuConstants.GROUND, controller.RIGHT, controller.LEFT), 1);
+            speed.x = physics.clampSpeed(physics.groundFriction(speed.x + (AuConstants.ACCELERATION * movementCommand()), AuConstants.GROUND, movementCommand()), 1);
         } else {
-            speed.x = physics.clampSpeed(physics.airFriction(speed.x + performMovement()/2), 2);
+            speed.x = physics.clampSpeed(physics.airFriction(speed.x + AuConstants.ACCELERATION * movementCommand()/2), 2);
             speed.y += physics.fallingDelta(controller.DOWN, controller.UP);
         }
 
@@ -144,8 +142,8 @@ public class Player extends Entity {
 
     }
 
-    private float performMovement(){
-        return generalCD == 0 ? AuConstants.ACCELERATION * (controller.RIGHT - controller.LEFT) : 0;
+    private float movementCommand(){
+        return generalCD == 0 ? (controller.RIGHT - controller.LEFT) : 0;
     }
     private boolean validateJump() {
         return controller.UP == 1 && (grounded || canDoubleJump) && jumpCD == 0 && generalCD == 0;
