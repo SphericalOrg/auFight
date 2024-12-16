@@ -12,10 +12,10 @@ public class PlayerRenderer {
     private float stateTime;
 
     public PlayerRenderer(int num) {
-        idleAnimation = ResourceManager.createAnimation("cat_idle", 4, 0.1f);
-        walkAnimation = ResourceManager.createAnimation("cat_walk", 8, 0.1f);
-        jumpAnimation = ResourceManager.createAnimation("cat_jump", 8, 0.11f);
-        doubleJumpAnimation = ResourceManager.createAnimation("cat_doublejump", 6, 0.11f);
+        idleAnimation = ResourceManager.createAnimation(num == 1 ? "cat_idle": "dog_idle", 4, 0.1f);
+        walkAnimation = ResourceManager.createAnimation(num == 1 ? "cat_walk": "dog_walk", 8, 0.1f);
+        jumpAnimation = ResourceManager.createAnimation(num == 1 ? "cat_jump": "dog_jump", 8, 0.11f);
+        doubleJumpAnimation = ResourceManager.createAnimation(num == 1 ? "cat_doublejump": "dog_doublejump", 6, 0.11f);
 
         sprite = new Sprite(idleAnimation.getKeyFrame(0));
         sprite.setScale(4f);

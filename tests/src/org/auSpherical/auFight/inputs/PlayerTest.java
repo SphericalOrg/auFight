@@ -3,6 +3,7 @@ package org.auSpherical.auFight.inputs;
 import static org.junit.jupiter.api.Assertions.*;
 import com.badlogic.gdx.math.Vector2;
 import org.auSpherical.auFight.Physics;
+import org.auSpherical.auFight.placeholders.CollisionBoxManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,12 +11,13 @@ public class PlayerTest {
 
     private  Player player;
     private  PlayerInput mockInput;
+    private CollisionBoxManager collisionBoxManager;
 
     @BeforeEach
     public void setUp() {
         mockInput = new PlayerInput();
         Physics physics = new Physics();
-        player = new Player(mockInput, 1, physics);
+        player = new Player(mockInput, 1, physics, collisionBoxManager);
     }
 
 
