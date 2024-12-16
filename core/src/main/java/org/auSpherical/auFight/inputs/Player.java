@@ -38,12 +38,13 @@ public class Player extends Entity {
 
 
     public int receiveDamage(float amm){
-        if (shield.isActive()){
+        if (shieldActive){
             if (shield.receiveDamage(amm) == 1){
                 shieldBreak();
             }
         } else {
             health -= amm;
+            
         }
         if (health <= 0){
             score--;
@@ -64,10 +65,16 @@ public class Player extends Entity {
         controller.update();
         ground();
         refreshCooldowns();
-        performAction();
+        defend();
+        performAttack();
         setSpeed();
         updateDirection();
         updatePosition();
+    }
+
+    private void defend(){
+        shieldActive = grounded && controller.DOWN == 1 && validateAction();
+        generalCD = shieldActive ? 1 : generalCD;
     }
 
     private void refreshCooldowns(){
@@ -77,30 +84,21 @@ public class Player extends Entity {
         shield.regenerar(shieldActive && shield.health<100 ? 0 : 10);
     }
 
-    private void performAction(){
-        if (validateAction()){
-            if (controller.A || controller.B){
-                if (controller.A){
-                    meleeAttack();
-                } else {
-                    rangedAttack();
-                }
-            } else if (grounded && controller.DOWN == 1){
-                shieldActive = true;
-            }
+    private void performAttack(){
+        if ((controller.A || controller.B) && validateAction()){
+            collitionManager.addHitBox(controller.A ? meleeAttack() : rangedAttack());
         }
     }
 
-    private void meleeAttack(){
-        collitionManager.addHitBox(new HitBox(new Vector2(position).add(lookingLeft ? -50 : 50, -5), 10, this , new Vector2(0,0), 20, 200));
+    private HitBox meleeAttack(){
         actionCD = 30;
-        generalCD = 20;
+        System.out.println(lookingLeft);
+        return new HitBox(new Vector2(position.cpy()).add(lookingLeft ? -120 : 30, -20), 5, this , new Vector2(0,0), 150, 70, 20, true);
     }
 
-    private void rangedAttack(){
-        collitionManager.addHitBox(new HitBox(new Vector2(position).add(lookingLeft ? -50 : 50, 5), 10, this , new Vector2(50,0), 10, 5));
+    private HitBox rangedAttack(){
         actionCD = 60;
-        generalCD = 10;
+        return new HitBox(new Vector2(position.cpy()).add(lookingLeft ? -90 : 45, 5), 10, this , new Vector2(lookingLeft ? -20 : 20,0), 10, 5, 100, false);
     }
 
     private boolean validateAction(){
