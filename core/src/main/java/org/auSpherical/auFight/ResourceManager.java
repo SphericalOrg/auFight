@@ -11,7 +11,7 @@ public class ResourceManager {
     public static AssetManager assetManager = new AssetManager();
 
     public static void loadAllResources() {
-        assetManager.load("cat.atlas", TextureAtlas.class);
+        assetManager.load("spritesanimation.atlas", TextureAtlas.class);
         assetManager.finishLoading();
     }
 
@@ -20,7 +20,7 @@ public class ResourceManager {
     }
 
     public static TextureRegion getRegion(String name) {
-        return assetManager.get("cat.atlas", TextureAtlas.class).findRegion(name);
+        return assetManager.get("spritesanimation.atlas", TextureAtlas.class).findRegion(name);
     }
 
     public static Animation<TextureRegion> createAnimation(String baseName, int frameCount, float frameDuration) {

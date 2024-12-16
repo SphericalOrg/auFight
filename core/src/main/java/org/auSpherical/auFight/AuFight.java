@@ -4,12 +4,16 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
+import org.auSpherical.auFight.screens.AuFightScreen;
+import org.auSpherical.auFight.screens.LeaderboardScreen;
+import org.auSpherical.auFight.screens.MenuScreen;
 
 public class AuFight extends Game {
 
     public SpriteBatch batch;
     public BitmapFont font;
-    OrthographicCamera camera;
+    public OrthographicCamera camera;
 
     @Override
     public void create() {
@@ -19,7 +23,7 @@ public class AuFight extends Game {
         ResourceManager.loadAllResources();
         camera.setToOrtho(false, 1600, 900);
         camera.update();
-        setScreen(new AuFightScreen(this));
+        setScreen(new MenuScreen(this));
     }
 
     @Override
@@ -32,5 +36,24 @@ public class AuFight extends Game {
     public void dispose() {
         batch.dispose();
         font.dispose();
+    }
+    public void changeScreen(String screen) throws XInputNotLoadedException {
+        switch (screen) {
+            case "GAME":
+                setScreen(new AuFightScreen(this));
+                break;
+            case "MENU":
+                setScreen(new MenuScreen(this));
+                break;
+            case "TOP":
+                setScreen(new LeaderboardScreen(this));
+                break;
+            /*case "NAME":
+                setScreen(new MenuScreen(this));
+                break;*/
+            default:
+                setScreen(new MenuScreen(this));
+                break;
+        }
     }
 }

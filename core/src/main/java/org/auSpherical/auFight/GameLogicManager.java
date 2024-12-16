@@ -1,23 +1,35 @@
-//esta clase sirve para hacer la logica de los sprites
 package org.auSpherical.auFight;
+
+import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
+import org.auSpherical.auFight.inputs.KeyboardInput;
+import org.auSpherical.auFight.inputs.Player;
+import org.auSpherical.auFight.placeholders.CollisionBoxManager;
 
 public class GameLogicManager {
 
     AuFight main;
     Player player1;
     Player player2;
+    Physics physics;
+    private final CollisionBoxManager collisionBoxManager;
 
-    public GameLogicManager(AuFight main) {
+
+    public GameLogicManager(AuFight main) throws XInputNotLoadedException {
         this.main = main;
-        player1 = new Player(new KeyboardInput(true),1);
-        player2 = new Player(new KeyboardInput(false),2);
+        this.physics = new Physics();
+        this.collisionBoxManager = new CollisionBoxManager();
+        player1 = new Player(new KeyboardInput(true), 1, physics, collisionBoxManager);
+        player2 = new Player(new KeyboardInput(false), 2, physics, collisionBoxManager);
+        //las hurtboxes las puse aqui para agregar por que son 2 siempre
+        collisionBoxManager.addHurtBox(player1.getHurtBox());
+        collisionBoxManager.addHurtBox(player2.getHurtBox());
     }
-    //aqui va donde deberias actualizar la logica del juego
-    public void update(float delta) {
 
+    public void update() {
+        collisionBoxManager.update();
         handleInput();
     }
-    //no me acuerdo como xuxa cmanejabas los inputs jun asi que dejo esto por aca si lo usas bien si no borralo
+
     private void handleInput() {
         player1.move();
         player2.move();
