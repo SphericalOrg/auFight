@@ -4,33 +4,109 @@ import com.badlogic.gdx.math.Vector2;
 import org.auSpherical.auFight.AuConstants;
 import org.auSpherical.auFight.Entity;
 import org.auSpherical.auFight.Physics;
+import org.auSpherical.auFight.placeholders.CollisionBoxManager;
+import org.auSpherical.auFight.placeholders.HitBox;
+import org.auSpherical.auFight.placeholders.HurtBox;
+import org.auSpherical.auFight.placeholders.Shield;
 
 public class Player extends Entity {
-    public boolean doubleJump = true;
+    public boolean canDoubleJump = true;
     private final PlayerInput controller;
     public boolean lookingRight = false;
-    boolean actionable;
     private boolean grounded = true;
     private final Vector2 speed = new Vector2(0, 0);
     private final Vector2 position;
-    int actionTimer = 60;
+    private boolean shieldActive = false;
+    private Shield shield;
+    private int generalCD = 0;
+    private int jumpCD = 0;
+    private int actionCD = 0;
     public int score;
     private final Physics physics;
+    private final CollisionBoxManager collitionManager;
 
-    public Player(PlayerInput controller, int num, Physics physics) {
+    public Player(PlayerInput controller, int num, Physics physics, CollisionBoxManager collitionManager) {
         this.controller = controller;
         this.physics = physics;
+        this.collitionManager = collitionManager;
         this.position = new Vector2(num == 1 ? 200 : 1200, AuConstants.FLOOR);
+        this.collitionBox = new HurtBox(position, this);
+        this.health = 100;
+        this.shield = new Shield();
     }
 
+
+
+    public int receiveDamage(float amm){
+        if (shield.isActive()){
+            if (shield.receiveDamage(amm) == 1){
+                shieldBreak();
+            }
+        } else {
+            health -= amm;
+        }
+        if (health <= 0){
+            score--;
+        }
+        return health > 0 ? 0 : 1;
+    }
+
+    private void shieldBreak() {
+        shieldActive = false;
+        generalCD = 100;
+    }
+
+    public HurtBox getHurtBox(){
+        return (HurtBox) collitionBox;
+    }
     @Override
     public void move() {
         controller.update();
         ground();
+        refreshCooldowns();
+        performAction();
         setSpeed();
-        action();
         updateDirection();
         updatePosition();
+    }
+
+    private void refreshCooldowns(){
+        jumpCD = jumpCD > 0 ? jumpCD - 1 : 0;
+        actionCD = actionCD > 0 ? actionCD - 1 : 0;
+        generalCD = generalCD > 0 ? generalCD - 1 : 0;
+        shield.regenerar(shieldActive && shield.health<100 ? 0 : 10);
+    }
+
+    private void performAction(){
+        if (validateAction()){
+            if (controller.A || controller.B){
+                if (controller.A){
+                    meleeAttack();
+                } else {
+                    rangedAttack();
+                }
+            } else if (grounded && controller.DOWN == 1){
+                shieldActive = true;
+            }
+        }
+    }
+
+    private void meleeAttack(){
+        HitBox hitbox = new HitBox(position.add(lookingRight ? 50 : -50, 0), 10, this);
+        collitionManager.addHitBox(hitbox);
+        actionCD = 30;
+        generalCD = 200;
+    }
+
+    private void rangedAttack(){
+        HitBox hitbox = new HitBox(position.add(lookingRight ? 50 : -50, 0), 10, this);
+        collitionManager.addHitBox(hitbox);
+        actionCD = 60;
+        generalCD = 10;
+    }
+
+    private boolean validateAction(){
+        return actionCD == 0 && generalCD == 0;
     }
 
     public boolean isGrounded() {
@@ -53,35 +129,34 @@ public class Player extends Entity {
         }
     }
 
-    private void action() {
-        if (!actionable) {
-            actionTimer--;
-        }
-        if (actionTimer <= 0) {
-            actionable = true;
-            actionTimer = 60;
-        }
-    }
-
     private void setSpeed() {
         if (grounded) {
-            speed.x = physics.clampSpeed(physics.groundFriction(speed.x + (AuConstants.ACCELERATION * (controller.RIGHT - controller.LEFT)), AuConstants.GROUND, controller.RIGHT, controller.LEFT), 1);
+            speed.x = physics.clampSpeed(physics.groundFriction(speed.x + (performMovement()), AuConstants.GROUND, controller.RIGHT, controller.LEFT), 1);
         } else {
-            speed.x = physics.clampSpeed(physics.airFriction(speed.x + (AuConstants.ACCELERATION / 2) * (controller.RIGHT - controller.LEFT)), 2);
+            speed.x = physics.clampSpeed(physics.airFriction(speed.x + performMovement()/2), 2);
             speed.y += physics.fallingDelta(controller.DOWN, controller.UP);
         }
 
-        if (actionable && (doubleJump || grounded) && controller.UP == 1 && speed.y <= 0.1f) {
-            doubleJump = grounded;
+        if (validateJump()) {
+            canDoubleJump = grounded;
             jump();
         }
+
+    }
+
+    private float performMovement(){
+        return generalCD == 0 ? AuConstants.ACCELERATION * (controller.RIGHT - controller.LEFT) : 0;
+    }
+    private boolean validateJump() {
+        return controller.UP == 1 && (grounded || canDoubleJump) && jumpCD == 0 && generalCD == 0;
     }
 
     private void jump() {
         speed.y = AuConstants.JUMP;
         speed.x = Math.signum((controller.RIGHT - controller.LEFT) / speed.x) == -1f ? -0.5f * speed.x : speed.x;
         grounded = false;
-        actionable = false;
+        jumpCD += 60;
+        actionCD = actionCD > 0 ? actionCD : 10;
     }
 
     private void ground() {
@@ -90,7 +165,7 @@ public class Player extends Entity {
             if (grounded) {
                 position.y = AuConstants.FLOOR;
                 speed.y = 0;
-                doubleJump = true;
+                canDoubleJump = true;
             }
         }
     }
