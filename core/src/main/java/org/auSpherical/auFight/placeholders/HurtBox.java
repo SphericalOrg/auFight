@@ -15,7 +15,7 @@ public class HurtBox extends Rectangle implements Damageable, CollitionBox {
     }
 
     public void update() {
-        setPosition(player.getPosition());
+        setPosition(player.getPosition().cpy().add(-22,-43));
     }
 
     public Player getPlayer() {
@@ -29,7 +29,7 @@ public class HurtBox extends Rectangle implements Damageable, CollitionBox {
     //si quieres ver la hitbox en pantalla
     public void render(ShapeRenderer shapeRenderer) {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(Color.WHITE);
+        shapeRenderer.setColor(player.shieldActive ? Color.BLUE : Color.WHITE);
         shapeRenderer.rect(x, y, width, height);
         shapeRenderer.end();
     }
