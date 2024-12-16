@@ -1,22 +1,27 @@
 package org.auSpherical.auFight.placeholders;
 
-import org.auSpherical.auFight.Entity;
+public class Shield implements Damageable {
 
-public class Shield extends Entity implements Damageable {
+    public int health = 100;
 
     private boolean isActive;
 
 
-    public void regenerar() {
-        //TODO: Waiting
+    public boolean isActive(){
+        return isActive;
     }
 
-    public void recieveDamage() {
-        //TODO: Waiting
+    public void regenerar(int amm) {
+        this.health += amm;
+        if (health > 100){
+            health = 100;
+        }
     }
+
 
     @Override
-    public void receiveDamage(float damage) {
-
+    public int receiveDamage(float damage) {
+        this.health -= 10;
+        return health > 0 ? 0 : 1;
     }
 }
