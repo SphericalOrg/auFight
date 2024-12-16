@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import org.auSpherical.auFight.inputs.Player;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-public class HitBox extends Rectangle {
+public class HitBox extends Rectangle implements CollitionBox {
     private final Vector2 vector2;
     private final float damage;
     private final Player player;
