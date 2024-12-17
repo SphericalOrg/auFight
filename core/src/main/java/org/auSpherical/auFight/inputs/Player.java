@@ -9,6 +9,8 @@ import org.auSpherical.auFight.placeholders.HitBox;
 import org.auSpherical.auFight.placeholders.HurtBox;
 import org.auSpherical.auFight.placeholders.Shield;
 
+
+
 public class Player extends Entity {
     public boolean canDoubleJump = true;
     private final PlayerInput controller;
@@ -88,8 +90,8 @@ public class Player extends Entity {
 
     private void performAttack(){
         if (queuedAttack != null && validateAction()){
-            collitionManager.addHitBox(queuedAttack == "melee" ? performMeleeAttack() : performRangedAttack());
-            actionCD = queuedAttack == "melee" ? 10 : 30;
+            collitionManager.addHitBox(queuedAttack.equals("melee") ? performMeleeAttack() : performRangedAttack());
+            actionCD = queuedAttack.equals("melee") ? 10 : 30;
             queuedAttack = null;
         }
     }
