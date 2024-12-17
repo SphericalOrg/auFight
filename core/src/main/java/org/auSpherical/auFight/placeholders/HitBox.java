@@ -14,6 +14,7 @@ public class HitBox extends Rectangle implements CollitionBox {
     private final Player player;
     private final Vector2 speed;
     public final boolean contact;
+    private boolean pushLeft;
     public int duration;
 
     //agrega en que posicion quiero que se cree la hitbox
@@ -24,13 +25,14 @@ public class HitBox extends Rectangle implements CollitionBox {
         this.damage = damage;
         this.duration = duration;
         this.player = player;
+        this.pushLeft = player.lookingLeft;
         this.contact = contact;
     }
 
 
     public void update() {
         if (contact) {
-            setPosition(player.getPosition().cpy().add(player.lookingLeft ? -120 : 30, -20));
+            setPosition(player.getPosition().cpy().add(pushLeft ? -80 : 75, -3));
         } else {
             setPosition(x+speed.x, y+speed.y);
         }
@@ -40,7 +42,7 @@ public class HitBox extends Rectangle implements CollitionBox {
 
     public void checkCollision(HurtBox hurtBox) {
         if (overlaps(hurtBox)) {
-            hurtBox.receiveDamage(damage);
+            hurtBox.receiveDamage(damage, pushLeft, contact? 7f+player.getSpeed().x : 3f, contact? 20 : 60);
             duration = 0;
         }
     }
