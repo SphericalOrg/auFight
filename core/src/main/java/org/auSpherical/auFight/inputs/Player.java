@@ -91,7 +91,7 @@ public class Player extends Entity {
     private void performAttack(){
         if (queuedAttack != null && validateAction()){
             collitionManager.addHitBox(queuedAttack.equals("melee") ? performMeleeAttack() : performRangedAttack());
-            actionCD = queuedAttack.equals("melee") ? 10 : 30;
+            actionCD = queuedAttack.equals("melee") ? 30 : 10;
             queuedAttack = null;
         }
     }
