@@ -25,6 +25,10 @@ public class Player extends Entity {
     private int rangedAttackTimer = 0;
     private int meleeAttackTimer = 0;
     private float knockbackAccel = 0;
+    private int dashDirection;
+    private int previousDirection = 0;
+    private int dashTimer;
+    private int dashCD = 0;
     public int score;
 
     private boolean meleeAttackState = false;
@@ -74,10 +78,10 @@ public class Player extends Entity {
         reduceCooldowns();
         shield.regenerar();
 
+
+        defend();
         performAttack();
         queueAttack();
-        defend();
-
         setSpeed();
         updateDirection();
         updatePosition();
@@ -97,6 +101,7 @@ public class Player extends Entity {
         jumpCD -= jumpCD > 0 ? 1 : 0;
         actionCD -= actionCD > 0 ? 1 : 0;
         generalCD -= generalCD > 0 ? 1 : 0;
+        dashCD -= dashCD > 0 ? 1 : 0;
     }
 
     private void performAttack(){
@@ -204,12 +209,22 @@ public class Player extends Entity {
     }
 
     private void setSpeed() {
+        float direction = movementCommand();
+
+        if (dashCD == 0){
+            dashing(direction > 0? 1 : direction < 0? -1 : 0);
+        }
+
+
+
         if (grounded) {
-            speed.x = physics.clampSpeed(physics.groundFriction(speed.x + (AuConstants.ACCELERATION * movementCommand()), AuConstants.GROUND, movementCommand()), 1);
+            speed.x = physics.clampSpeed(physics.groundFriction(speed.x + (AuConstants.ACCELERATION * direction), AuConstants.GROUND, direction), 1);
         } else {
-            speed.x = physics.clampSpeed(physics.airFriction(speed.x + AuConstants.ACCELERATION * movementCommand()/2), 2);
+            speed.x = physics.clampSpeed(physics.airFriction(speed.x + AuConstants.ACCELERATION *direction/2), 2);
             speed.y += physics.fallingDelta(controller.DOWN, controller.UP);
         }
+
+
 
         if (validateJump()) {
             jump();
@@ -218,6 +233,21 @@ public class Player extends Entity {
         knockbackAccel -= (float) (knockbackAccel > 0 ? 0.1 : knockbackAccel < 0 ? -0.1 : 0);
         knockbackAccel = Math.abs(knockbackAccel) < 0.2 ? 0 : knockbackAccel;
 
+    }
+
+    private void dashing(int direction){
+        dashTimer = dashTimer > 0 ? dashTimer - 1 : 0;
+        dashDirection = dashTimer == 0 ? 0 : dashDirection;
+        if(direction == 0 && previousDirection != 0){
+            dashDirection = previousDirection;
+            dashTimer = 20;
+        }
+        previousDirection = direction;
+        if (dashTimer > 0 && direction == dashDirection){
+            System.out.printf("Dashing %d\n", dashDirection);
+            dashCD += 60;
+            knockbackAccel += (float) (dashDirection * 5f);
+        }
     }
 
     private float movementCommand(){
