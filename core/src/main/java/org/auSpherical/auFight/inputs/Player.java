@@ -89,12 +89,13 @@ public class Player extends Entity {
     private void performAttack(){
         if (queuedAttack != null && validateAction()){
             collitionManager.addHitBox(queuedAttack);
+
             queuedAttack = null;
         }
     }
 
     private void queueAttack(){
-        if ((controller.A || controller.B) && validateAction()){
+        if ((controller.A || controller.B) && validateAction() && queuedAttack == null){
             queuedAttack = (controller.A ? meleeAttack() : rangedAttack());
         }
     }
