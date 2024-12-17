@@ -71,11 +71,9 @@ public class Player extends Entity {
         reduceCooldowns();
         shield.regenerar();
 
-        if (isActionable()){
-            performAttack();
-            queueAttack();
-            defend();
-        }
+        performAttack();
+        queueAttack();
+        defend();
 
         setSpeed();
         updateDirection();
@@ -86,7 +84,7 @@ public class Player extends Entity {
 
     private void defend(){
         shield.deactivate();
-        if (grounded && controller.DOWN == 1 && !queuedAttack()){
+        if (grounded && controller.DOWN == 1 && !queuedAttack() && isActionable()){
             shield.activate();
             generalCD += 1;
         }
@@ -99,10 +97,8 @@ public class Player extends Entity {
     }
 
     private void performAttack(){
-        if (queuedAttack()){
+        if (queuedAttack() && isActionable()){
             collitionManager.addHitBox(meleeAttackState ? performMeleeAttack() : performRangedAttack());
-            actionCD = meleeAttackState ? 30 : 10;
-            meleeAttackState = rangedAttackState = false;
         }
     }
 
@@ -127,7 +123,7 @@ public class Player extends Entity {
     }
   
     private void queueAttack(){
-        if (validateAttack()){
+        if (validateAttack() && isActionable()){
             if (controller.A){
                 queueMeleeAttack();
             } else {
@@ -145,22 +141,24 @@ public class Player extends Entity {
     }
 
     private void queueMeleeAttack(){
-        actionCD = 49;
-        generalCD = 49;
+        actionCD = 17;
+        generalCD = 17;
         setMeleeAttackState(true);
     }
 
     private void queueRangedAttack(){
-        actionCD = 96;
-        generalCD = 96;
+        actionCD = 85;
+        generalCD = 85;
         setRangedAttackState(true);
     }
 
     private HitBox performMeleeAttack() {
+        actionCD += 33;
         return new HitBox(new Vector2(position.cpy()).add(lookingLeft ? -120 : 30, -20), 5, this , new Vector2(0,0), 150, 70, 20, true);
     }
 
     private HitBox performRangedAttack() {
+        actionCD += 20;
         return new HitBox(new Vector2(position.cpy()).add(lookingLeft ? -90 : 45, 5), 10, this , new Vector2(lookingLeft ? -20 : 20,0), 10, 5, 100, false);
     }
 
