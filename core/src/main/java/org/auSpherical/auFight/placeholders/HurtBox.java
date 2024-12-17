@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import org.auSpherical.auFight.inputs.Player;
 
-public class HurtBox extends Rectangle implements Damageable, CollitionBox {
+public class HurtBox extends Rectangle implements CollitionBox {
     private final Player player;
 
     public HurtBox(Vector2 vector2, Player player) {
@@ -22,8 +22,8 @@ public class HurtBox extends Rectangle implements Damageable, CollitionBox {
         return player;
     }
 
-    public int receiveDamage(float damage) {
-        return player.receiveDamage(damage);
+    public int receiveDamage(float damage, boolean lookingLeft, float knockback, int hitStun) {
+        return player.receiveDamage(damage, lookingLeft, knockback, hitStun);
     }
 
     //si quieres ver la hitbox en pantalla
