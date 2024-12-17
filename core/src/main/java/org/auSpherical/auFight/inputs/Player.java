@@ -75,7 +75,7 @@ public class Player extends Entity {
     }
 
     private void defend(){
-        shieldActive = grounded && controller.DOWN == 1 && validateAction();
+        shieldActive = grounded && controller.DOWN == 1 && validateAction() && queuedAttack == null;
         generalCD = shieldActive ? 1 : generalCD;
     }
 
@@ -101,8 +101,8 @@ public class Player extends Entity {
     }
 
     private String queueMeleeAttack(){
-        actionCD = 30;
-        generalCD = 35;
+        actionCD = 20;
+        generalCD = 25;
         return "melee";
     }
 
