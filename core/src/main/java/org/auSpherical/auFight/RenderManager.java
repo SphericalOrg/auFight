@@ -6,11 +6,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import org.auSpherical.auFight.inputs.Player;
-import org.auSpherical.auFight.placeholders.HitBox;
-import org.auSpherical.auFight.placeholders.HurtBox;
 import org.auSpherical.auFight.rendered.PlayerRenderer;
+import org.auSpherical.auFight.rendered.WeaponsRenderer;
 
 public class RenderManager {
 
@@ -40,14 +38,8 @@ public class RenderManager {
         renderPlayer(gameLogicManager.player1, player1Renderer);
         renderPlayer(gameLogicManager.player2, player2Renderer);
         drawHud();
+        gameLogicManager.collisionBoxManager.hitBoxes.forEach(hitBox -> new WeaponsRenderer(hitBox.isContact()).render(batch, hitBox.x, hitBox.y, hitBox.getPlayer().lookingLeft));
         batch.end();
-        ShapeRenderer shapeRenderer = new ShapeRenderer();
-        for (HitBox hitBox : gameLogicManager.collisionBoxManager.hitBoxes) {
-            hitBox.render(shapeRenderer);
-        }
-        for (HurtBox hurtBox : gameLogicManager.collisionBoxManager.hurtBoxes) {
-            hurtBox.render(shapeRenderer);
-        }
     }
 
     private void drawHud() {
@@ -57,11 +49,13 @@ public class RenderManager {
     }
 
     private void drawHealthBar(float health, float x) {
-        batch.draw(healthBarRegion, x, (float) 850, health, 20);
+        float healthPercentage = health / 100.0f;
+        float barWidth = 200 * healthPercentage;
+        batch.draw(healthBarRegion, x, 850, barWidth, 20);
     }
 
     private void renderPlayer(Player player, PlayerRenderer renderer) {
-        renderer.updateAnimation(player.isGrounded(), player.canDoubleJump, player.getSpeed().x, Gdx.graphics.getDeltaTime());
+        renderer.updateAnimation(player.isGrounded(), player.canDoubleJump, player.getSpeed().x, Gdx.graphics.getDeltaTime(),player.getRangedAttackState(), player.getMeleeAttackState());
         renderer.render(batch, player.getPosition().x, player.getPosition().y, player.lookingLeft);
     }
 }

@@ -21,7 +21,11 @@ public class Player extends Entity {
     private int generalCD = 0;
     private int jumpCD = 0;
     private int actionCD = 0;
+    private int rangedAttackTimer = 0;
+    private int meleeAttackTimer = 0;
     public int score;
+    private boolean meleeAttackState = false;
+    private boolean rangedAttackState = false;
     private final Physics physics;
     private final CollisionBoxManager collitionManager;
 
@@ -70,6 +74,8 @@ public class Player extends Entity {
         setSpeed();
         updateDirection();
         updatePosition();
+        updateRangedAttackState();
+        updateMeleeAttackState();
     }
 
     private void defend(){
@@ -93,12 +99,55 @@ public class Player extends Entity {
     private HitBox meleeAttack(){
         actionCD = 30;
         System.out.println(lookingLeft);
+        setMeleeAttackState(true);
         return new HitBox(new Vector2(position.cpy()).add(lookingLeft ? -120 : 30, -20), 5, this , new Vector2(0,0), 150, 70, 20, true);
+    }
+
+    private void updateMeleeAttackState() {
+        if (meleeAttackState && meleeAttackTimer > 0) {
+            meleeAttackTimer--;
+            System.out.println(meleeAttackTimer);
+            if (meleeAttackTimer == 0) {
+                meleeAttackState = false;
+            }
+        }
+    }
+
+    public void setMeleeAttackState(boolean state) {
+        meleeAttackState = state;
+        if (state) {
+            meleeAttackTimer = 50;
+        }
+    }
+
+    public boolean getMeleeAttackState() {
+        return meleeAttackState;
     }
 
     private HitBox rangedAttack(){
         actionCD = 60;
+        setRangedAttackState(true);
         return new HitBox(new Vector2(position.cpy()).add(lookingLeft ? -90 : 45, 5), 10, this , new Vector2(lookingLeft ? -20 : 20,0), 10, 5, 100, false);
+    }
+
+    private void updateRangedAttackState() {
+        if (rangedAttackState && rangedAttackTimer > 0) {
+            rangedAttackTimer--;
+            if (rangedAttackTimer == 0) {
+                rangedAttackState = false;
+            }
+        }
+    }
+
+    public void setRangedAttackState(boolean state) {
+        rangedAttackState = state;
+        if (state) {
+            rangedAttackTimer = 104;
+        }
+    }
+
+    public boolean getRangedAttackState() {
+        return rangedAttackState;
     }
 
     private boolean validateAction(){
