@@ -11,14 +11,13 @@ public class WeaponsRenderer {
     private float stateTime;
 
     public WeaponsRenderer(Boolean contact) {
-        animation = ResourceManager.createAnimation("cat_jump", 8, 0.2f);
+        animation = ResourceManager.createAnimation(contact ? "blast" : "cat_doublejump", 4, 0.2f);
         sprite = new Sprite(animation.getKeyFrame(0));
-        sprite.setScale(3.5f);
+        sprite.setScale(contact ? 4f : 3f);
     }
 
     public void render(SpriteBatch batch, float x, float y, boolean lookingRight) {
         stateTime += Gdx.graphics.getDeltaTime();
-        System.out.println(stateTime);
         frame = animation.getKeyFrame(stateTime, true);
         sprite.setRegion(frame);
         sprite.setSize(frame.getRegionWidth(), frame.getRegionHeight());

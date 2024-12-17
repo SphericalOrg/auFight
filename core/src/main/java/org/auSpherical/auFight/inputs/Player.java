@@ -106,7 +106,6 @@ public class Player extends Entity {
     private void updateMeleeAttackState() {
         if (meleeAttackState && meleeAttackTimer > 0) {
             meleeAttackTimer--;
-            System.out.println(meleeAttackTimer);
             meleeAttackState = meleeAttackTimer != 0;
         }
     }
