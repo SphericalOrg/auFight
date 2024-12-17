@@ -18,8 +18,7 @@ public class Player extends Entity {
     private boolean grounded = true;
     private final Vector2 speed = new Vector2(0, 0);
     private final Vector2 position;
-    public boolean shieldActive = false;
-    private Shield shield;
+    public Shield shield;
     private int generalCD = 0;
     private int jumpCD = 0;
     private int actionCD = 0;
@@ -41,7 +40,7 @@ public class Player extends Entity {
 
 
     public int receiveDamage(float amm){
-        if (shieldActive){
+        if (shield.isActive()){
             if (shield.receiveDamage(amm) == 1){
                 shieldBreak();
             }
@@ -56,7 +55,6 @@ public class Player extends Entity {
     }
 
     private void shieldBreak() {
-        shieldActive = false;
         generalCD = 100;
     }
 
@@ -77,15 +75,19 @@ public class Player extends Entity {
     }
 
     private void defend(){
-        shieldActive = grounded && controller.DOWN == 1 && validateAction() && queuedAttack == null;
-        generalCD = shieldActive ? 1 : generalCD;
+        shield.regenerar();
+        if (grounded && controller.DOWN == 1 && validateAction() && queuedAttack == null){
+            shield.activate();
+            generalCD += 1;
+        } else {
+            shield.deactivate();
+        }
     }
 
     private void refreshCooldowns(){
-        jumpCD = jumpCD > 0 ? jumpCD - 1 : 0;
-        actionCD = actionCD > 0 ? actionCD - 1 : 0;
-        generalCD = generalCD > 0 ? generalCD - 1 : 0;
-        shield.regenerar(shieldActive && shield.health<100 ? 0 : 10);
+        jumpCD -= jumpCD > 0 ? 1 : 0;
+        actionCD -= actionCD > 0 ? 1 : 0;
+        generalCD -= generalCD > 0 ? 1 : 0;
     }
 
     private void performAttack(){
