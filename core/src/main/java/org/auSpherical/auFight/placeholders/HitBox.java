@@ -42,7 +42,8 @@ public class HitBox extends Rectangle implements CollitionBox {
 
     public void checkCollision(HurtBox hurtBox) {
         if (overlaps(hurtBox)) {
-            hurtBox.receiveDamage(damage, pushLeft, contact? 7f+player.getSpeed().x : 3f, contact? 20 : 60);
+            System.out.println(pushLeft);
+            hurtBox.receiveDamage(damage, pushLeft, contact? 5f+Math.abs(player.getSpeed().x) : 2.5f, contact? 20 : 60);
             duration = 0;
         }
     }

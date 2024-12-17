@@ -25,6 +25,10 @@ public class Player extends Entity {
     private int rangedAttackTimer = 0;
     private int meleeAttackTimer = 0;
     private float knockbackAccel = 0;
+    private int dashDirection;
+    private int previousDirection = 0;
+    private int dashTimer;
+    private int dashCD = 0;
     public int score;
 
     private boolean meleeAttackState = false;
@@ -45,13 +49,15 @@ public class Player extends Entity {
 
 
 
-    public int receiveDamage(float amm, boolean lookingLeft, float knockbackStrenght, int hitStun) {
+    public int receiveDamage(float amm, boolean pushingLeft, float knockbackStrenght, int hitStun) {
         if (shield.isActive()){
             shield.receiveDamage(amm);
         } else {
             health -= amm;
         }
-        knockbackAccel += (float) (knockbackStrenght * (lookingLeft ? -1 : 1) * (shield.isActive() ? 0.25 : 1));
+        
+        knockbackAccel += (float) (knockbackStrenght * (pushingLeft ? -1 : 1) * (shield.isActive() ? 0.25 : 1));
+        System.out.println("Knockback: " + knockbackAccel);
         hitStun(shield.isActive()? (int) (hitStun * 0.25) : hitStun);
         if (health <= 0){
             score--;
@@ -74,10 +80,10 @@ public class Player extends Entity {
         reduceCooldowns();
         shield.regenerar();
 
+
+        defend();
         performAttack();
         queueAttack();
-        defend();
-
         setSpeed();
         updateDirection();
         updatePosition();
@@ -97,6 +103,7 @@ public class Player extends Entity {
         jumpCD -= jumpCD > 0 ? 1 : 0;
         actionCD -= actionCD > 0 ? 1 : 0;
         generalCD -= generalCD > 0 ? 1 : 0;
+        dashCD -= dashCD > 0 ? 1 : 0;
     }
 
     private void performAttack(){
@@ -156,7 +163,7 @@ public class Player extends Entity {
 
     private HitBox performMeleeAttack() {
         actionCD += 33;
-        return new HitBox(new Vector2(position.cpy()).add(lookingLeft ? -80 : 75, -3), 10, this , new Vector2(0,0), 27, 11, 20, true);
+        return new HitBox(new Vector2(position.cpy()).add(lookingLeft ? -80 : 75, -3), 10, this , new Vector2(0,0), 27, 11, 33, true);
     }
 
     private HitBox performRangedAttack() {
@@ -201,15 +208,26 @@ public class Player extends Entity {
 
     private void updateDirection() {
         lookingLeft = controller.RIGHT == controller.LEFT ? lookingLeft : controller.LEFT == 1;
+
     }
 
     private void setSpeed() {
+        float direction = movementCommand();
+
+        if (dashCD == 0){
+            dashing(direction > 0? 1 : direction < 0? -1 : 0);
+        }
+
+
+
         if (grounded) {
-            speed.x = physics.clampSpeed(physics.groundFriction(speed.x + (AuConstants.ACCELERATION * movementCommand()), AuConstants.GROUND, movementCommand()), 1);
+            speed.x = physics.clampSpeed(physics.groundFriction(speed.x + (AuConstants.ACCELERATION * direction), AuConstants.GROUND, direction), 1);
         } else {
-            speed.x = physics.clampSpeed(physics.airFriction(speed.x + AuConstants.ACCELERATION * movementCommand()/2), 2);
+            speed.x = physics.clampSpeed(physics.airFriction(speed.x + AuConstants.ACCELERATION *direction/2), 2);
             speed.y += physics.fallingDelta(controller.DOWN, controller.UP);
         }
+
+
 
         if (validateJump()) {
             jump();
@@ -218,6 +236,21 @@ public class Player extends Entity {
         knockbackAccel -= (float) (knockbackAccel > 0 ? 0.1 : knockbackAccel < 0 ? -0.1 : 0);
         knockbackAccel = Math.abs(knockbackAccel) < 0.2 ? 0 : knockbackAccel;
 
+    }
+
+    private void dashing(int direction){
+        dashTimer = dashTimer > 0 ? dashTimer - 1 : 0;
+        dashDirection = dashTimer == 0 ? 0 : dashDirection;
+        if(direction == 0 && previousDirection != 0){
+            dashDirection = previousDirection;
+            dashTimer = 20;
+        }
+        previousDirection = direction;
+        if (dashTimer > 0 && direction == dashDirection){
+            dashCD += 60;
+            knockbackAccel += (dashDirection * 5f);
+            dashDirection = 0;
+        }
     }
 
     private float movementCommand(){
