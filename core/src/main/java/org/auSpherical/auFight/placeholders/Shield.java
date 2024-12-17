@@ -1,6 +1,6 @@
 package org.auSpherical.auFight.placeholders;
 
-public class Shield implements Damageable {
+public class Shield {
 
     public float health = 100;
     private boolean isActive = false;
@@ -24,9 +24,9 @@ public class Shield implements Damageable {
         return isActive;
     }
 
-    @Override
+
     public int receiveDamage(float damage) {
         this.health -= damage;
-        return health > 0 ? 0 : 100;
+        return Math.round(health > 0 ? damage : 100);
     }
 }
