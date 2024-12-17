@@ -22,7 +22,7 @@ public class Player extends Entity {
     private int jumpCD = 0;
     private int actionCD = 0;
     public int score;
-    private HitBox queuedAttack = null;
+    private String queuedAttack = null;
     private final Physics physics;
     private final CollisionBoxManager collitionManager;
 
@@ -88,25 +88,35 @@ public class Player extends Entity {
 
     private void performAttack(){
         if (queuedAttack != null && validateAction()){
-            collitionManager.addHitBox(queuedAttack);
-
+            collitionManager.addHitBox(queuedAttack == "melee" ? performMeleeAttack() : performRangedAttack());
+            actionCD = queuedAttack == "melee" ? 10 : 30;
             queuedAttack = null;
         }
     }
 
     private void queueAttack(){
         if ((controller.A || controller.B) && validateAction() && queuedAttack == null){
-            queuedAttack = (controller.A ? meleeAttack() : rangedAttack());
+            queuedAttack = (controller.A ? queueMeleeAttack() : queueRangedAttack());
         }
     }
 
-    private HitBox meleeAttack(){
+    private String queueMeleeAttack(){
         actionCD = 30;
+        generalCD = 35;
+        return "melee";
+    }
+
+    private String queueRangedAttack(){
+        actionCD = 60;
+        generalCD = 60;
+        return "ranged";
+    }
+
+    private HitBox performMeleeAttack() {
         return new HitBox(new Vector2(position.cpy()).add(lookingLeft ? -120 : 30, -20), 5, this , new Vector2(0,0), 150, 70, 20, true);
     }
 
-    private HitBox rangedAttack(){
-        actionCD = 60;
+    private HitBox performRangedAttack() {
         return new HitBox(new Vector2(position.cpy()).add(lookingLeft ? -90 : 45, 5), 10, this , new Vector2(lookingLeft ? -20 : 20,0), 10, 5, 100, false);
     }
 
@@ -157,10 +167,10 @@ public class Player extends Entity {
     }
 
     private void jump() {
-        speed.y = AuConstants.JUMP;
+        speed.y = grounded ? AuConstants.JUMP : AuConstants.JUMP*2/3;
         speed.x = Math.signum((controller.RIGHT - controller.LEFT) / speed.x) == -1f ? -0.5f * speed.x : speed.x;
         grounded = false;
-        jumpCD += 60;
+        jumpCD += 40;
         actionCD = actionCD > 0 ? actionCD : 10;
     }
 
