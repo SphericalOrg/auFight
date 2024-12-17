@@ -85,11 +85,10 @@ public class Player extends Entity {
     }
 
     private void defend(){
+        shield.deactivate();
         if (grounded && controller.DOWN == 1 && !queuedAttack()){
             shield.activate();
             generalCD += 1;
-        } else {
-            shield.deactivate();
         }
     }
 
@@ -112,9 +111,7 @@ public class Player extends Entity {
         if (meleeAttackState && meleeAttackTimer > 0) {
             meleeAttackTimer--;
             System.out.println(meleeAttackTimer);
-            if (meleeAttackTimer == 0) {
-                meleeAttackState = false;
-            }
+            meleeAttackState = meleeAttackTimer != 0;
         }
     }
 
@@ -130,13 +127,17 @@ public class Player extends Entity {
     }
   
     private void queueAttack(){
-        if (!queuedAttack() && (controller.A || controller.B)){
+        if (validateAttack()){
             if (controller.A){
                 queueMeleeAttack();
             } else {
                 queueRangedAttack();
             }
         }
+    }
+
+    private boolean validateAttack(){
+        return !queuedAttack() && (controller.A || controller.B);
     }
 
     private boolean queuedAttack(){
@@ -167,9 +168,7 @@ public class Player extends Entity {
     private void updateRangedAttackState() {
         if (rangedAttackState && rangedAttackTimer > 0) {
             rangedAttackTimer--;
-            if (rangedAttackTimer == 0) {
-                rangedAttackState = false;
-            }
+            rangedAttackState = rangedAttackTimer != 0;
         }
     }
 
