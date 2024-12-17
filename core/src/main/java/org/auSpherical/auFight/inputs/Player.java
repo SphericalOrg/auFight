@@ -24,6 +24,7 @@ public class Player extends Entity {
     private int actionCD = 0;
     private int rangedAttackTimer = 0;
     private int meleeAttackTimer = 0;
+    private float knockbackAccel = 0;
     public int score;
 
     private boolean meleeAttackState = false;
@@ -44,20 +45,22 @@ public class Player extends Entity {
 
 
 
-    public int receiveDamage(float amm){
+    public int receiveDamage(float amm, boolean lookingLeft, float knockbackStrenght, int hitStun) {
         if (shield.isActive()){
-            blockStun(shield.receiveDamage(amm));
+            shield.receiveDamage(amm);
         } else {
             health -= amm;
         }
+        knockbackAccel += (float) (knockbackStrenght * (lookingLeft ? -1 : 1) * (shield.isActive() ? 0.25 : 1));
+        hitStun(shield.isActive()? (int) (hitStun * 0.25) : hitStun);
         if (health <= 0){
             score--;
         }
         return health > 0 ? 0 : 1;
     }
 
-    private void blockStun(int stun) {
-        generalCD = stun;
+    private void hitStun(int stun) {
+        generalCD += stun;
     }
 
     public HurtBox getHurtBox(){
@@ -153,12 +156,12 @@ public class Player extends Entity {
 
     private HitBox performMeleeAttack() {
         actionCD += 33;
-        return new HitBox(new Vector2(position.cpy()).add(lookingLeft ? -120 : 30, -20), 5, this , new Vector2(0,0), 150, 70, 20, true);
+        return new HitBox(new Vector2(position.cpy()).add(lookingLeft ? -80 : 75, -3), 10, this , new Vector2(0,0), 27, 11, 20, true);
     }
 
     private HitBox performRangedAttack() {
         actionCD += 20;
-        return new HitBox(new Vector2(position.cpy()).add(lookingLeft ? -90 : 45, 5), 10, this , new Vector2(lookingLeft ? -20 : 20,0), 10, 5, 100, false);
+        return new HitBox(new Vector2(position.cpy()).add(lookingLeft ? -80 : 75, -3), 5, this , new Vector2(lookingLeft ? -20 : 20,0), 10, 5, 100, false);
     }
 
     //TODO: sync with actual attacks. RN performAttack() takes priority over setting the state to false
@@ -211,6 +214,9 @@ public class Player extends Entity {
         if (validateJump()) {
             jump();
         }
+        speed.x += knockbackAccel;
+        knockbackAccel -= (float) (knockbackAccel > 0 ? 0.1 : knockbackAccel < 0 ? -0.1 : 0);
+        knockbackAccel = Math.abs(knockbackAccel) < 0.2 ? 0 : knockbackAccel;
 
     }
 
@@ -242,4 +248,5 @@ public class Player extends Entity {
         position.x = Math.min(Math.max(position.x + speed.x, 20), 1560);
         position.y += speed.y;
     }
+
 }
