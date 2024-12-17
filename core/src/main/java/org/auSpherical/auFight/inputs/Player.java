@@ -49,13 +49,15 @@ public class Player extends Entity {
 
 
 
-    public int receiveDamage(float amm, boolean lookingLeft, float knockbackStrenght, int hitStun) {
+    public int receiveDamage(float amm, boolean pushingLeft, float knockbackStrenght, int hitStun) {
         if (shield.isActive()){
             shield.receiveDamage(amm);
         } else {
             health -= amm;
         }
-        knockbackAccel += (float) (knockbackStrenght * (lookingLeft ? -1 : 1) * (shield.isActive() ? 0.25 : 1));
+        
+        knockbackAccel += (float) (knockbackStrenght * (pushingLeft ? -1 : 1) * (shield.isActive() ? 0.25 : 1));
+        System.out.println("Knockback: " + knockbackAccel);
         hitStun(shield.isActive()? (int) (hitStun * 0.25) : hitStun);
         if (health <= 0){
             score--;
@@ -161,7 +163,7 @@ public class Player extends Entity {
 
     private HitBox performMeleeAttack() {
         actionCD += 33;
-        return new HitBox(new Vector2(position.cpy()).add(lookingLeft ? -80 : 75, -3), 10, this , new Vector2(0,0), 27, 11, 20, true);
+        return new HitBox(new Vector2(position.cpy()).add(lookingLeft ? -80 : 75, -3), 10, this , new Vector2(0,0), 27, 11, 33, true);
     }
 
     private HitBox performRangedAttack() {
@@ -206,6 +208,7 @@ public class Player extends Entity {
 
     private void updateDirection() {
         lookingLeft = controller.RIGHT == controller.LEFT ? lookingLeft : controller.LEFT == 1;
+
     }
 
     private void setSpeed() {
@@ -244,9 +247,9 @@ public class Player extends Entity {
         }
         previousDirection = direction;
         if (dashTimer > 0 && direction == dashDirection){
-            System.out.printf("Dashing %d\n", dashDirection);
             dashCD += 60;
-            knockbackAccel += (float) (dashDirection * 5f);
+            knockbackAccel += (dashDirection * 5f);
+            dashDirection = 0;
         }
     }
 
