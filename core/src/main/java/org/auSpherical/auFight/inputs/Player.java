@@ -239,7 +239,7 @@ public class Player extends Entity {
     }
 
     private void updatePosition() {
-        position.x += speed.x;
+        position.x = Math.min(Math.max(position.x + speed.x, 20), 1560);
         position.y += speed.y;
     }
 }
