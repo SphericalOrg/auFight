@@ -1,10 +1,12 @@
 package org.auSpherical.auFight.placeholders;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import org.auSpherical.auFight.inputs.Player;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import org.auSpherical.auFight.rendered.WeaponsRenderer;
 
 public class HitBox extends Rectangle implements CollitionBox {
     private final Vector2 vector2;
@@ -53,5 +55,9 @@ public class HitBox extends Rectangle implements CollitionBox {
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.rect(x, y, width, height);
         shapeRenderer.end();
+    }
+
+    public boolean isContact() {
+        return contact;
     }
 }

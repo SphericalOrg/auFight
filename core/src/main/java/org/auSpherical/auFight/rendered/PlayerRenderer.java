@@ -9,6 +9,11 @@ public class PlayerRenderer {
     private final Animation<TextureRegion> walkAnimation;
     private final Animation<TextureRegion> jumpAnimation;
     private final Animation<TextureRegion> doubleJumpAnimation;
+    private final Animation<TextureRegion> meleeAttackAnimation;
+    private final Animation<TextureRegion> deathAnimation;
+    private final Animation<TextureRegion> rangedAttackAnimation;
+    private Animation<TextureRegion> currentAnimation;
+    private TextureRegion frame;
     private float stateTime;
 
     public PlayerRenderer(int num) {
@@ -16,6 +21,9 @@ public class PlayerRenderer {
         walkAnimation = ResourceManager.createAnimation(num == 1 ? "cat_walk": "dog_walk", 8, 0.1f);
         jumpAnimation = ResourceManager.createAnimation(num == 1 ? "cat_jump": "dog_jump", 8, 0.11f);
         doubleJumpAnimation = ResourceManager.createAnimation(num == 1 ? "cat_doublejump": "dog_doublejump", 6, 0.11f);
+        meleeAttackAnimation = ResourceManager.createAnimation(num == 1 ? "cat_melee" : "dog_doublejump", 6, 0.05f);
+        rangedAttackAnimation = ResourceManager.createAnimation(num == 1 ? "cat_ranged" : "dog_doublejump", 6, 0.1f);
+        deathAnimation = ResourceManager.createAnimation(num == 1 ? "cat_doublejump" : "dog_doublejump", 6, 0.1f);
 
         sprite = new Sprite(idleAnimation.getKeyFrame(0));
         sprite.setScale(4f);
@@ -23,20 +31,28 @@ public class PlayerRenderer {
         sprite.setY(300);
     }
 
-    public void updateAnimation(boolean grounded, boolean doubleJump, float speedX, float deltaTime) {
-        stateTime += deltaTime;
-        TextureRegion frame;
+
+    public void updateAnimation(boolean grounded, boolean doubleJump, float speedX, float deltaTime, boolean rangedAttack, boolean meleeAttack) {
+        Animation<TextureRegion> newAnimation = idleAnimation;
+
         if (!grounded) {
-            if (!doubleJump) {
-                frame = doubleJumpAnimation.getKeyFrame(stateTime, false);
-            } else {
-                frame = jumpAnimation.getKeyFrame(stateTime, false);
-            }
+            newAnimation = doubleJump ? jumpAnimation : doubleJumpAnimation;
         } else if (Math.abs(speedX) > 0) {
-            frame = walkAnimation.getKeyFrame(stateTime, true);
-        } else {
-            frame = idleAnimation.getKeyFrame(stateTime, true);
+            newAnimation = walkAnimation;
+        } else if (rangedAttack) {
+            newAnimation = rangedAttackAnimation;
+        } else if (meleeAttack) {
+            newAnimation = meleeAttackAnimation;
         }
+
+        if (newAnimation != currentAnimation) {
+            currentAnimation = newAnimation;
+            stateTime = 0;
+        }
+
+        stateTime += deltaTime;
+        frame = currentAnimation.getKeyFrame(stateTime, true);
+
         sprite.setRegion(frame);
         sprite.setSize(frame.getRegionWidth(), frame.getRegionHeight());
         sprite.setOriginCenter();
