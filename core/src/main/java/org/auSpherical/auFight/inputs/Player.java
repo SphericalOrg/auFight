@@ -29,8 +29,6 @@ public class Player extends Entity {
     private boolean meleeAttackState = false;
     private boolean rangedAttackState = false;
 
-    private boolean queuedAttack = false;
-
     private final Physics physics;
     private final CollisionBoxManager collitionManager;
 
@@ -48,12 +46,9 @@ public class Player extends Entity {
 
     public int receiveDamage(float amm){
         if (shield.isActive()){
-            if (shield.receiveDamage(amm) == 1){
-                shieldBreak();
-            }
+            blockStun(shield.receiveDamage(amm));
         } else {
             health -= amm;
-            
         }
         if (health <= 0){
             score--;
@@ -61,21 +56,27 @@ public class Player extends Entity {
         return health > 0 ? 0 : 1;
     }
 
-    private void shieldBreak() {
-        generalCD = 100;
+    private void blockStun(int stun) {
+        generalCD = stun;
     }
 
     public HurtBox getHurtBox(){
         return (HurtBox) collitionBox;
     }
+
     @Override
     public void move() {
         controller.update();
         ground();
-        refreshCooldowns();
-        defend();
-        queueAttack();
-        performAttack();
+        reduceCooldowns();
+        shield.regenerar();
+
+        if (isActionable()){
+            performAttack();
+            queueAttack();
+            defend();
+        }
+
         setSpeed();
         updateDirection();
         updatePosition();
@@ -84,8 +85,7 @@ public class Player extends Entity {
     }
 
     private void defend(){
-        shield.regenerar();
-        if (grounded && controller.DOWN == 1 && validateAction() && !queuedAttack){
+        if (grounded && controller.DOWN == 1 && !queuedAttack()){
             shield.activate();
             generalCD += 1;
         } else {
@@ -93,17 +93,17 @@ public class Player extends Entity {
         }
     }
 
-    private void refreshCooldowns(){
+    private void reduceCooldowns(){
         jumpCD -= jumpCD > 0 ? 1 : 0;
         actionCD -= actionCD > 0 ? 1 : 0;
         generalCD -= generalCD > 0 ? 1 : 0;
     }
 
     private void performAttack(){
-        if (queuedAttack && validateAction()){
+        if (queuedAttack()){
             collitionManager.addHitBox(meleeAttackState ? performMeleeAttack() : performRangedAttack());
             actionCD = meleeAttackState ? 30 : 10;
-            queuedAttack = meleeAttackState = rangedAttackState = false;
+            meleeAttackState = rangedAttackState = false;
         }
     }
 
@@ -130,8 +130,7 @@ public class Player extends Entity {
     }
   
     private void queueAttack(){
-        if ((controller.A || controller.B) && validateAction() && !queuedAttack){
-            queuedAttack = true;
+        if (!queuedAttack() && (controller.A || controller.B)){
             if (controller.A){
                 queueMeleeAttack();
             } else {
@@ -140,18 +139,20 @@ public class Player extends Entity {
         }
     }
 
+    private boolean queuedAttack(){
+        return meleeAttackState || rangedAttackState;
+    }
+
     private void queueMeleeAttack(){
-        actionCD = 20;
-        generalCD = 25;
+        actionCD = 49;
+        generalCD = 49;
         setMeleeAttackState(true);
-        queuedAttack = true;
     }
 
     private void queueRangedAttack(){
-        actionCD = 60;
-        generalCD = 60;
+        actionCD = 96;
+        generalCD = 96;
         setRangedAttackState(true);
-        queuedAttack = true;
     }
 
     private HitBox performMeleeAttack() {
@@ -162,6 +163,7 @@ public class Player extends Entity {
         return new HitBox(new Vector2(position.cpy()).add(lookingLeft ? -90 : 45, 5), 10, this , new Vector2(lookingLeft ? -20 : 20,0), 10, 5, 100, false);
     }
 
+    //TODO: sync with actual attacks. RN performAttack() takes priority over setting the state to false
     private void updateRangedAttackState() {
         if (rangedAttackState && rangedAttackTimer > 0) {
             rangedAttackTimer--;
@@ -182,7 +184,7 @@ public class Player extends Entity {
         return rangedAttackState;
     }
 
-    private boolean validateAction(){
+    private boolean isActionable(){
         return actionCD == 0 && generalCD == 0;
     }
 
@@ -199,11 +201,7 @@ public class Player extends Entity {
     }
 
     private void updateDirection() {
-        if ((controller.RIGHT > 0 && lookingLeft) && !(controller.LEFT > 0)) {
-            lookingLeft = false;
-        } else if ((controller.LEFT > 0 && !lookingLeft) && !(controller.RIGHT > 0)) {
-            lookingLeft = true;
-        }
+        lookingLeft = controller.RIGHT == controller.LEFT ? lookingLeft : controller.LEFT == 1;
     }
 
     private void setSpeed() {
@@ -215,7 +213,6 @@ public class Player extends Entity {
         }
 
         if (validateJump()) {
-            canDoubleJump = grounded;
             jump();
         }
 
@@ -229,21 +226,19 @@ public class Player extends Entity {
     }
 
     private void jump() {
-        speed.y = grounded ? AuConstants.JUMP : AuConstants.JUMP*2/3;
+        canDoubleJump = grounded;
+        speed.y = AuConstants.JUMP * (grounded ? 1 : (float) 2/3);
         speed.x = Math.signum((controller.RIGHT - controller.LEFT) / speed.x) == -1f ? -0.5f * speed.x : speed.x;
         grounded = false;
         jumpCD += 40;
-        actionCD = actionCD > 0 ? actionCD : 10;
+        actionCD = Math.max(actionCD, 10);
     }
 
     private void ground() {
-        if (!grounded) {
-            grounded = position.y <= AuConstants.FLOOR;
-            if (grounded) {
-                position.y = AuConstants.FLOOR;
-                speed.y = 0;
-                canDoubleJump = true;
-            }
+        if (position.y <= AuConstants.FLOOR && !grounded) {
+            grounded = canDoubleJump = true;
+            position.y = AuConstants.FLOOR;
+            speed.y = 0;
         }
     }
 
