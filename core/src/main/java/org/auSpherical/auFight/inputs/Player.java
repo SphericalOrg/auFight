@@ -29,7 +29,7 @@ public class Player extends Entity {
     private boolean meleeAttackState = false;
     private boolean rangedAttackState = false;
 
-    private String queuedAttack = null;
+    private boolean queuedAttack = false;
 
     private final Physics physics;
     private final CollisionBoxManager collitionManager;
@@ -85,7 +85,7 @@ public class Player extends Entity {
 
     private void defend(){
         shield.regenerar();
-        if (grounded && controller.DOWN == 1 && validateAction() && queuedAttack == null){
+        if (grounded && controller.DOWN == 1 && validateAction() && !queuedAttack){
             shield.activate();
             generalCD += 1;
         } else {
@@ -100,10 +100,10 @@ public class Player extends Entity {
     }
 
     private void performAttack(){
-        if (queuedAttack != null && validateAction()){
-            collitionManager.addHitBox(queuedAttack.equals("melee") ? performMeleeAttack() : performRangedAttack());
-            actionCD = queuedAttack.equals("melee") ? 30 : 10;
-            queuedAttack = null;
+        if (queuedAttack && validateAction()){
+            collitionManager.addHitBox(meleeAttackState ? performMeleeAttack() : performRangedAttack());
+            actionCD = meleeAttackState ? 30 : 10;
+            queuedAttack = meleeAttackState = rangedAttackState = false;
         }
     }
 
@@ -130,23 +130,28 @@ public class Player extends Entity {
     }
   
     private void queueAttack(){
-        if ((controller.A || controller.B) && validateAction() && queuedAttack == null){
-            queuedAttack = (controller.A ? queueMeleeAttack() : queueRangedAttack());
+        if ((controller.A || controller.B) && validateAction() && !queuedAttack){
+            queuedAttack = true;
+            if (controller.A){
+                queueMeleeAttack();
+            } else {
+                queueRangedAttack();
+            }
         }
     }
 
-    private String queueMeleeAttack(){
+    private void queueMeleeAttack(){
         actionCD = 20;
         generalCD = 25;
         setMeleeAttackState(true);
-        return "melee";
+        queuedAttack = true;
     }
 
-    private String queueRangedAttack(){
+    private void queueRangedAttack(){
         actionCD = 60;
         generalCD = 60;
         setRangedAttackState(true);
-        return "ranged";
+        queuedAttack = true;
     }
 
     private HitBox performMeleeAttack() {
