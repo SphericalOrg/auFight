@@ -27,6 +27,6 @@ public class Shield implements Damageable {
     @Override
     public int receiveDamage(float damage) {
         this.health -= damage;
-        return health > 0 ? 0 : 1;
+        return health > 0 ? 0 : 100;
     }
 }
