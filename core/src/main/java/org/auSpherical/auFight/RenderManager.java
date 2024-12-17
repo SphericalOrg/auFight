@@ -7,8 +7,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.auSpherical.auFight.inputs.Player;
+import org.auSpherical.auFight.placeholders.HitBox;
+import org.auSpherical.auFight.rendered.DisappearingWeaponRenderer;
 import org.auSpherical.auFight.rendered.PlayerRenderer;
 import org.auSpherical.auFight.rendered.WeaponsRenderer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RenderManager {
 
@@ -19,6 +24,7 @@ public class RenderManager {
     PlayerRenderer player1Renderer;
     PlayerRenderer player2Renderer;
     private final TextureRegion healthBarRegion;
+    private final List<DisappearingWeaponRenderer> disappearingWeaponRenderers;
 
     public RenderManager(GameLogicManager gameLogicManager, SpriteBatch batch) {
         this.gameLogicManager = gameLogicManager;
@@ -30,7 +36,9 @@ public class RenderManager {
         player2Renderer = new PlayerRenderer(2);
         Texture healthBarTexture = new Texture("RedBar.png");
         healthBarRegion = new TextureRegion(healthBarTexture);
+        this.disappearingWeaponRenderers = new ArrayList<>();
     }
+
 
     public void draw() {
         batch.begin();
@@ -39,7 +47,12 @@ public class RenderManager {
         renderPlayer(gameLogicManager.player2, player2Renderer);
         drawHud();
         gameLogicManager.collisionBoxManager.hitBoxes.forEach(hitBox -> new WeaponsRenderer(hitBox.isContact()).render(batch, hitBox.x, hitBox.y, hitBox.getPlayer().lookingLeft));
+        gameLogicManager.collisionBoxManager.disappearingWeaponRenderers.forEach(renderer -> renderer.render(batch));
         batch.end();
+    }
+
+    public void addDisappearingWeaponRenderer(DisappearingWeaponRenderer renderer) {
+        disappearingWeaponRenderers.add(renderer);
     }
 
     private void drawHud() {
@@ -55,7 +68,7 @@ public class RenderManager {
     }
 
     private void renderPlayer(Player player, PlayerRenderer renderer) {
-        renderer.updateAnimation(player.isGrounded(), player.canDoubleJump, player.getSpeed().x, Gdx.graphics.getDeltaTime(),player.getRangedAttackState(), player.getMeleeAttackState());
+        renderer.updateAnimation(player.isGrounded(), player.canDoubleJump, player.getSpeed().x, Gdx.graphics.getDeltaTime(), player.getRangedAttackState(), player.getMeleeAttackState());
         renderer.render(batch, player.getPosition().x, player.getPosition().y, player.lookingLeft);
     }
 }

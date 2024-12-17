@@ -21,8 +21,8 @@ public class PlayerRenderer {
         walkAnimation = ResourceManager.createAnimation(num == 1 ? "cat_walk": "dog_walk", 8, 0.1f);
         jumpAnimation = ResourceManager.createAnimation(num == 1 ? "cat_jump": "dog_jump", 8, 0.11f);
         doubleJumpAnimation = ResourceManager.createAnimation(num == 1 ? "cat_doublejump": "dog_doublejump", 6, 0.11f);
-        meleeAttackAnimation = ResourceManager.createAnimation(num == 1 ? "cat_melee" : "dog_doublejump", 6, 0.05f);
-        rangedAttackAnimation = ResourceManager.createAnimation(num == 1 ? "cat_ranged" : "dog_doublejump", 6, 0.1f);
+        meleeAttackAnimation = ResourceManager.createAnimation(num == 1 ? "cat_melee" : "dog_melee", 10, 0.05f);
+        rangedAttackAnimation = ResourceManager.createAnimation(num == 1 ? "cat_ranged" : "dog_ranged", 6, 0.1f);
         deathAnimation = ResourceManager.createAnimation(num == 1 ? "cat_doublejump" : "dog_doublejump", 6, 0.1f);
 
         sprite = new Sprite(idleAnimation.getKeyFrame(0));
