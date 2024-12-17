@@ -11,7 +11,7 @@ public class HitBox extends Rectangle implements CollitionBox {
     private final float damage;
     private final Player player;
     private final Vector2 speed;
-    private final boolean contact;
+    public final boolean contact;
     public int duration;
 
     //agrega en que posicion quiero que se cree la hitbox
