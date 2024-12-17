@@ -5,8 +5,8 @@ import com.badlogic.gdx.utils.Array;
 
 
 public class CollisionBoxManager {
-    private final Array<HurtBox> hurtBoxes = new Array<>();
-    private final Array<HitBox> hitBoxes = new Array<>();
+    public final Array<HurtBox> hurtBoxes = new Array<>();
+    public final Array<HitBox> hitBoxes = new Array<>();
 
     public void addHurtBox(HurtBox hurtBox) {
         hurtBoxes.add(hurtBox);
@@ -29,7 +29,12 @@ public class CollisionBoxManager {
 
         Array.ArrayIterator<HitBox> hitBoxIterator = new Array.ArrayIterator<>(hitBoxes);
         while (hitBoxIterator.hasNext()) {
-            hitBoxIterator.next().update();
+            HitBox hitBox = hitBoxIterator.next();
+            hitBox.update();
+            if (hitBox.duration <= 0) {
+                removeHitBox(hitBox);
+            }
+            hitBox.render(new ShapeRenderer());
         }
     }
 

@@ -58,7 +58,7 @@ public class PlayerTest {
         }
         mockInput.UP = 1;
         player.move(); // Simulate second jump
-        assertFalse(player.doubleJump);
+        assertFalse(player.canDoubleJump);
     }
 
     @Test

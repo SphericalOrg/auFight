@@ -6,7 +6,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import org.auSpherical.auFight.inputs.Player;
+import org.auSpherical.auFight.placeholders.HitBox;
+import org.auSpherical.auFight.placeholders.HurtBox;
 import org.auSpherical.auFight.rendered.PlayerRenderer;
 
 public class RenderManager {
@@ -38,6 +41,13 @@ public class RenderManager {
         renderPlayer(gameLogicManager.player2, player2Renderer);
         drawHud();
         batch.end();
+        ShapeRenderer shapeRenderer = new ShapeRenderer();
+        for (HitBox hitBox : gameLogicManager.collisionBoxManager.hitBoxes) {
+            hitBox.render(shapeRenderer);
+        }
+        for (HurtBox hurtBox : gameLogicManager.collisionBoxManager.hurtBoxes) {
+            hurtBox.render(shapeRenderer);
+        }
     }
 
     private void drawHud() {
@@ -51,7 +61,7 @@ public class RenderManager {
     }
 
     private void renderPlayer(Player player, PlayerRenderer renderer) {
-        renderer.updateAnimation(player.isGrounded(), player.doubleJump, player.getSpeed().x, Gdx.graphics.getDeltaTime());
-        renderer.render(batch, player.getPosition().x, player.getPosition().y, player.lookingRight);
+        renderer.updateAnimation(player.isGrounded(), player.canDoubleJump, player.getSpeed().x, Gdx.graphics.getDeltaTime());
+        renderer.render(batch, player.getPosition().x, player.getPosition().y, player.lookingLeft);
     }
 }

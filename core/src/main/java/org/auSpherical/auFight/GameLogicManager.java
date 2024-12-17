@@ -11,7 +11,7 @@ public class GameLogicManager {
     Player player1;
     Player player2;
     Physics physics;
-    private final CollisionBoxManager collisionBoxManager;
+    CollisionBoxManager collisionBoxManager;
 
 
     public GameLogicManager(AuFight main) throws XInputNotLoadedException {
