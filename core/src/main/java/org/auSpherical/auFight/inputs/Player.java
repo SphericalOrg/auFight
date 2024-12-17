@@ -22,6 +22,7 @@ public class Player extends Entity {
     private int jumpCD = 0;
     private int actionCD = 0;
     public int score;
+    private HitBox queuedAttack = null;
     private final Physics physics;
     private final CollisionBoxManager collitionManager;
 
@@ -66,6 +67,7 @@ public class Player extends Entity {
         ground();
         refreshCooldowns();
         defend();
+        queueAttack();
         performAttack();
         setSpeed();
         updateDirection();
@@ -85,14 +87,20 @@ public class Player extends Entity {
     }
 
     private void performAttack(){
+        if (queuedAttack != null && validateAction()){
+            collitionManager.addHitBox(queuedAttack);
+            queuedAttack = null;
+        }
+    }
+
+    private void queueAttack(){
         if ((controller.A || controller.B) && validateAction()){
-            collitionManager.addHitBox(controller.A ? meleeAttack() : rangedAttack());
+            queuedAttack = (controller.A ? meleeAttack() : rangedAttack());
         }
     }
 
     private HitBox meleeAttack(){
         actionCD = 30;
-        System.out.println(lookingLeft);
         return new HitBox(new Vector2(position.cpy()).add(lookingLeft ? -120 : 30, -20), 5, this , new Vector2(0,0), 150, 70, 20, true);
     }
 
